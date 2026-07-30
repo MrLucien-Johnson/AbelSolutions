@@ -30,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticRoutes.map((path) => ({
-      url: `${base}${path}`,
+      url: `${base}${path === "" ? "/" : `${path}/`}`,
       lastModified: new Date(),
       changeFrequency: path === "" ? ("weekly" as const) : ("monthly" as const),
       priority: path === "" ? 1 : path.includes("privacy") || path.includes("cookies") || path.includes("terms") ? 0.3 : 0.8,

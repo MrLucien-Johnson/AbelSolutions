@@ -4,6 +4,11 @@
  * Never invent contact details, addresses, or accreditations.
  */
 
+function envOrNull(value: string | undefined): string | null {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : null;
+}
+
 export const siteConfig = {
   name: "Abel Solutions",
   legalName: "Abel Solutions Limited",
@@ -13,20 +18,20 @@ export const siteConfig = {
     "Abel Solutions Limited provides practical technology support — including repairs, custom PC builds and IT assistance — alongside construction services such as media walls, TV mounting, shelving and property improvements across London and surrounding areas.",
   tagline: "Technology and construction solutions you can depend on.",
   url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
+    envOrNull(process.env.NEXT_PUBLIC_SITE_URL) ??
     "https://mrlucien-johnson.github.io/AbelSolutions",
   locale: "en_GB",
 
   /** PLACEHOLDER — replace with genuine contact details before launch */
   contact: {
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? null,
-    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? null,
+    email: envOrNull(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
+    phone: envOrNull(process.env.NEXT_PUBLIC_CONTACT_PHONE),
     emailPlaceholder: "[Business email — to be confirmed]",
     phonePlaceholder: "[Business telephone — to be confirmed]",
   },
 
   /** PLACEHOLDER — company registration number not yet supplied */
-  companyNumber: process.env.NEXT_PUBLIC_COMPANY_NUMBER ?? null,
+  companyNumber: envOrNull(process.env.NEXT_PUBLIC_COMPANY_NUMBER),
   companyNumberPlaceholder: "[Company number — to be confirmed]",
 
   /**
