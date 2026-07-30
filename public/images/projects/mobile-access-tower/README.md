@@ -1,20 +1,20 @@
 # Mobile access tower — project photos
 
-Drop approved Abel Solutions site photography here.
+Only approved **Abel Solutions on-site photography** belongs here.
 
-## Recommended filenames
+## Use
 
-| File | Suggested content |
+| File | Content |
 | --- | --- |
-| `tower-looking-up.jpg` | On-site photo looking up the mobile access tower with PPE in frame |
-| `site-work-01.jpg` | Additional approved site / access work photos |
+| `tower-looking-up.jpg` | Looking up the mobile access tower with PPE in frame (site photo) |
 
-After adding files, update the image paths in `src/content/projects.ts` for the `mobile-access-tower` entry and change `status` from `"coming-soon"` to `"live"` when ready to feature it fully.
+After adding the site photo, update `src/content/projects.ts` for `mobile-access-tower` to point at that file, then set `status` to `"live"` when ready.
 
-## Do not publish
+## Do not include
 
-- Screenshots or photos of **PASMA Ltd copyrighted training slides** (© PASMA Ltd). Those materials are not Abel Solutions photography and must not be republished on the website.
-- Unapproved client-identifying residential details or precise addresses.
+- **PASMA training slides** or photos of PASMA course screens (© PASMA Ltd) — never publish these
+- Stock images, competitor photos, or unapproved client-identifying details
+- Precise residential addresses
 
 ## Certification wording
 
