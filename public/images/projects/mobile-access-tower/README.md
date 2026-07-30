@@ -2,13 +2,11 @@
 
 Only approved **Abel Solutions on-site photography** belongs here.
 
-## Use
+## Current asset
 
 | File | Content |
 | --- | --- |
 | `tower-looking-up.jpg` | Looking up the mobile access tower with PPE in frame (site photo) |
-
-After adding the site photo, update `src/content/projects.ts` for `mobile-access-tower` to point at that file, then set `status` to `"live"` when ready.
 
 ## Do not include
 
