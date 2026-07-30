@@ -4,6 +4,14 @@ export function cn(...classes: Array<string | false | null | undefined>): string
   return classes.filter(Boolean).join(" ");
 }
 
+/** Prefix public asset paths for GitHub Pages `basePath` builds. */
+export function publicAsset(path: string): string {
+  const normalised = path.startsWith("/") ? path : `/${path}`;
+  const basePath =
+    process.env.GITHUB_PAGES === "true" ? "/AbelSolutions" : "";
+  return `${basePath}${normalised}`;
+}
+
 export function absoluteUrl(path = ""): string {
   const base = siteConfig.url.replace(/\/$/, "");
   if (!path) return base;

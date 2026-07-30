@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, publicAsset } from "@/lib/utils";
 import type { Project } from "@/content/projects";
 import { Button } from "@/components/ui/Button";
 
@@ -34,7 +34,7 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
       >
         {cover ? (
           <Image
-            src={cover.src}
+            src={publicAsset(cover.src)}
             alt={cover.alt}
             fill
             className="object-cover"
