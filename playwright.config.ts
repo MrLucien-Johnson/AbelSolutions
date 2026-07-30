@@ -16,8 +16,22 @@ export default defineConfig({
     timeout: 180000,
   },
   projects: [
-    { name: "chromium-desktop", use: { ...devices["Desktop Chrome"] } },
-    { name: "chromium-tablet", use: { ...devices["iPad Mini"] } },
-    { name: "chromium-mobile", use: { ...devices["Pixel 5"] } },
+    {
+      name: "chromium-desktop",
+      use: { ...devices["Desktop Chrome"], browserName: "chromium" },
+    },
+    {
+      name: "chromium-tablet",
+      use: {
+        browserName: "chromium",
+        viewport: { width: 768, height: 1024 },
+        isMobile: true,
+        hasTouch: true,
+      },
+    },
+    {
+      name: "chromium-mobile",
+      use: { ...devices["Pixel 5"], browserName: "chromium" },
+    },
   ],
 });

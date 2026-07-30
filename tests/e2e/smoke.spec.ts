@@ -3,7 +3,9 @@ import { test, expect } from "@playwright/test";
 test.describe("Abel Solutions website", () => {
   test("home page shows brand and primary CTAs", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("link", { name: /Abel Solutions — home/i })).toBeVisible();
+    await expect(
+      page.getByRole("banner").getByRole("link", { name: /Abel Solutions — home/i }),
+    ).toBeVisible();
     await expect(
       page.getByRole("heading", {
         name: /Technology and construction solutions you can depend on/i,
