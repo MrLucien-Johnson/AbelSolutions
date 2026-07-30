@@ -127,10 +127,20 @@ npx serve out
 
 | Problem | What to check |
 | --- | --- |
-| Form still says delivery is not connected | Secret name spelling, then redeploy |
-| Form says sent, but no email | Check spam; confirm Web3Forms inbox email |
-| Deploy failed | Open the failed Actions run and check the log |
-| Wrong inbox | Update email in Web3Forms dashboard |
+| Form still says delivery is not connected | Secret name spelling, then redeploy, then hard-refresh the page |
+| Form says **Enquiry sent**, but no email | Check spam/junk/promotions; confirm the inbox email in Web3Forms; wait 1–2 minutes |
+| Form shows **Delivery failed** | Read the on-screen error. Domain blocks and invalid keys show here |
+| `github.io` domain blocked | Web3Forms free plans sometimes block free subdomains. Contact Web3Forms support and ask them to allow `mrlucien-johnson.github.io`, or use a custom domain |
+| Wrong inbox | Update the receiving email in the Web3Forms dashboard |
+| Email bounced / suppressed | If the access key was created before the inbox was ready, ask Web3Forms support to remove your address from their suppression list |
+
+### If the form says sent but nothing arrives
+
+1. Check **Spam**, **Junk**, **Promotions**, and **Updates**
+2. Search for sender like `notify@web3forms.com`
+3. In Web3Forms dashboard, confirm the destination email and recent submissions
+4. Mark any Web3Forms mail as **Not spam** and move it to Primary
+5. If still nothing, contact Web3Forms support and mention your access key email + domain `mrlucien-johnson.github.io`
 
 ## Security note
 

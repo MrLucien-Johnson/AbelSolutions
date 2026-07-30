@@ -11,13 +11,22 @@ export type EnquiryPayload = {
   subject: string;
   replyTo: string;
   textBody: string;
-  fields: Record<string, string | boolean | undefined>;
+  name: string;
+  fields?: Record<string, string | boolean | undefined>;
 };
 
 export type EnquiryResult =
   | { status: "sent" }
   | { status: "not_configured"; message: string }
   | { status: "failed"; message: string };
+
+type Web3FormsResponse = {
+  success?: boolean;
+  message?: string;
+  body?: {
+    message?: string;
+  };
+};
 
 export async function submitEnquiry(
   payload: EnquiryPayload,
@@ -43,19 +52,27 @@ export async function submitEnquiry(
         access_key: accessKey,
         subject: payload.subject,
         from_name: "Abel Solutions website",
+        name: payload.name,
         email: payload.replyTo,
         message: payload.textBody,
-        ...payload.fields,
+        ...(payload.fields ?? {}),
       }),
     });
 
-    const data = (await response.json()) as { success?: boolean };
+    let data: Web3FormsResponse = {};
+    try {
+      data = (await response.json()) as Web3FormsResponse;
+    } catch {
+      data = {};
+    }
+
+    const providerMessage =
+      data.message || data.body?.message || "Unknown provider response.";
 
     if (!response.ok || !data.success) {
       return {
         status: "failed",
-        message:
-          "We could not deliver your enquiry just now. Please try again later or use another contact method.",
+        message: `Delivery failed (${response.status}): ${providerMessage}`,
       };
     }
 

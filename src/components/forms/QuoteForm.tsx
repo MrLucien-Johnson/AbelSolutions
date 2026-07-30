@@ -118,9 +118,9 @@ export function QuoteForm({ defaultCategory }: { defaultCategory?: string }) {
       type: "quote",
       subject: `Quote request — ${data.serviceCategory} — ${data.fullName}`,
       replyTo: data.email,
+      name: data.fullName,
       textBody,
       fields: {
-        fullName: data.fullName,
         telephone: data.telephone,
         postcodeOrArea: data.postcodeOrArea,
         serviceCategory: data.serviceCategory,

@@ -93,11 +93,11 @@ export function ContactForm() {
       type: "contact",
       subject: `Contact — ${data.subject} — ${data.fullName}`,
       replyTo: data.email,
+      name: data.fullName,
       textBody,
       fields: {
-        fullName: data.fullName,
         telephone: data.telephone || "",
-        subject: data.subject,
+        formSubject: data.subject,
       },
     });
 
