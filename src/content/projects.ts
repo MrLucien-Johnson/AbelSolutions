@@ -152,8 +152,8 @@ const upcomingProjects: Project[] = [
       "A construction example clients can review alongside technology work, with honest scope and safety notes.",
     images: [
       {
-        src: "/images/projects/mobile-access-tower/cover.svg",
-        alt: "Cover graphic for upcoming mobile access tower site photography",
+        src: "/images/projects/mobile-access-tower/tower-looking-up.jpg",
+        alt: "Worker in PPE looking up a mobile access tower on a construction site",
       },
     ],
     isPlaceholder: false,
