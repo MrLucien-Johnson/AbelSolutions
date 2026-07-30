@@ -1,0 +1,84 @@
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+type ButtonVariant = "primary" | "secondary" | "ghost" | "on-dark" | "on-dark-secondary";
+type ButtonSize = "md" | "lg";
+
+type CommonProps = {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  className?: string;
+  children: React.ReactNode;
+};
+
+const base =
+  "inline-flex items-center justify-center gap-2 rounded-[10px] font-semibold transition-colors focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 disabled:cursor-not-allowed disabled:opacity-60";
+
+const sizes: Record<ButtonSize, string> = {
+  md: "min-h-11 px-5 text-[0.95rem]",
+  lg: "min-h-12 px-6 text-base",
+};
+
+const variants: Record<ButtonVariant, string> = {
+  primary:
+    "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] focus-visible:outline-[var(--color-accent)]",
+  secondary:
+    "bg-transparent text-[var(--color-navy)] border border-[var(--color-border-strong)] hover:border-[var(--color-navy)] hover:bg-[var(--color-surface)] focus-visible:outline-[var(--color-accent)]",
+  ghost:
+    "bg-transparent text-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] focus-visible:outline-[var(--color-accent)]",
+  "on-dark":
+    "bg-white text-[var(--color-navy)] hover:bg-[var(--color-surface-soft)] focus-visible:outline-white",
+  "on-dark-secondary":
+    "bg-transparent text-white border border-white/40 hover:border-white hover:bg-white/10 focus-visible:outline-white",
+};
+
+type ButtonAsButton = CommonProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined };
+
+type ButtonAsLink = CommonProps &
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+    href: string;
+    external?: boolean;
+  };
+
+export function Button({
+  variant = "primary",
+  size = "md",
+  className,
+  children,
+  ...props
+}: ButtonAsButton | ButtonAsLink) {
+  const classes = cn(base, sizes[size], variants[variant], className);
+
+  if ("href" in props && props.href) {
+    const { href, external, ...rest } = props as ButtonAsLink &
+      React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
+    if (external) {
+      return (
+        <a
+          href={href}
+          className={classes}
+          rel="noopener noreferrer"
+          target="_blank"
+          {...rest}
+        >
+          {children}
+        </a>
+      );
+    }
+
+    return (
+      <Link href={href} className={classes} {...rest}>
+        {children}
+      </Link>
+    );
+  }
+
+  const buttonProps = props as ButtonAsButton;
+  return (
+    <button className={classes} {...buttonProps}>
+      {children}
+    </button>
+  );
+}
