@@ -12,7 +12,7 @@ type CommonProps = {
 };
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-[10px] font-semibold transition-colors focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-[10px] font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 disabled:cursor-not-allowed disabled:opacity-60";
 
 const sizes: Record<ButtonSize, string> = {
   md: "min-h-11 px-5 text-[0.95rem]",
@@ -21,15 +21,15 @@ const sizes: Record<ButtonSize, string> = {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] focus-visible:outline-[var(--color-accent)]",
+    "bg-accent text-white hover:bg-accent-hover focus-visible:outline-accent",
   secondary:
-    "bg-transparent text-[var(--color-navy)] border border-[var(--color-border-strong)] hover:border-[var(--color-navy)] hover:bg-[var(--color-surface)] focus-visible:outline-[var(--color-accent)]",
+    "bg-transparent text-navy border border-border-strong hover:border-navy hover:bg-surface focus-visible:outline-accent",
   ghost:
-    "bg-transparent text-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] focus-visible:outline-[var(--color-accent)]",
+    "bg-transparent text-accent hover:bg-accent-soft focus-visible:outline-accent",
   "on-dark":
-    "bg-white text-[var(--color-navy)] hover:bg-[var(--color-surface-soft)] focus-visible:outline-white",
+    "bg-white text-[#0b1c2c] hover:bg-surface-soft focus-visible:outline-white",
   "on-dark-secondary":
-    "bg-transparent text-white border border-white/40 hover:border-white hover:bg-white/10 focus-visible:outline-white",
+    "bg-transparent text-white border border-white/50 hover:border-white hover:bg-white/10 focus-visible:outline-white",
 };
 
 type ButtonAsButton = CommonProps &
