@@ -1,45 +1,40 @@
-# Form setup
+# Form setup (GitHub Pages)
 
-Quote and contact forms share the same delivery approach.
+This site is statically hosted on GitHub Pages, so there is no server-side `/api` route.
 
 ## Behaviour
 
 1. Client-side Zod validation with accessible error messages
-2. Server-side validation in `/api/quote` and `/api/contact`
-3. Honeypot field (`companyWebsite`) for basic spam filtering
-4. In-memory rate limiting per IP
-5. Email delivery only when explicitly enabled and configured
+2. Honeypot field (`companyWebsite`) for basic spam filtering
+3. Optional delivery through **Web3Forms** (free)
+4. Honest messaging when delivery is not configured
+
+## Enable free enquiry delivery
+
+1. Create a free account at [https://web3forms.com](https://web3forms.com)
+2. Create an access key for your inbox email
+3. Add a GitHub Actions repository secret named `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`
+4. Redeploy (push to `main` or run the Deploy GitHub Pages workflow)
+
+For local testing, put the key in `.env.local`:
+
+```bash
+NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=your_access_key_here
+```
+
+Then run:
+
+```bash
+npm run build:pages
+npx serve out
+```
 
 ## Honest delivery states
 
-| Delivery result | UI behaviour |
+| Result | UI behaviour |
 | --- | --- |
-| `sent` | Success confirmation |
-| `not_configured` | Explains that email delivery is not set up; does not claim the message was emailed |
-| `failed` | Error asking the user to try again later |
+| sent | Success confirmation |
+| not_configured | Explains delivery is not connected; does not claim the message was emailed |
+| failed | Error asking the user to try again later |
 
-## Enabling Resend delivery
-
-1. Create a Resend account and API key
-2. Verify a sending domain
-3. Set in `.env.local`:
-
-```bash
-EMAIL_DELIVERY_ENABLED=true
-RESEND_API_KEY=re_xxx
-EMAIL_FROM_ADDRESS="Abel Solutions <enquiries@your-domain.co.uk>"
-CONTACT_INBOX_EMAIL=you@your-domain.co.uk
-NEXT_PUBLIC_CONTACT_EMAIL=you@your-domain.co.uk
-```
-
-4. Restart the server and submit a test enquiry
-
-Never commit API keys.
-
-## File uploads
-
-Uploads are intentionally not enabled in this version. Customers can mention that photos are available; staff can request them by email once contact details are live.
-
-## Future hardening
-
-For multi-instance hosting, replace the in-memory rate limiter with Redis or an edge rate-limit service.
+Never commit secrets to Git.

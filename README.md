@@ -57,14 +57,11 @@ Important placeholders:
 - `NEXT_PUBLIC_CONTACT_EMAIL`
 - `NEXT_PUBLIC_CONTACT_PHONE`
 - `NEXT_PUBLIC_COMPANY_NUMBER`
-- `EMAIL_DELIVERY_ENABLED`
-- `RESEND_API_KEY`
-- `EMAIL_FROM_ADDRESS`
-- `CONTACT_INBOX_EMAIL`
+- `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`
 
 ## Contact and quote forms
 
-Forms validate on the client and server. Email delivery is optional and disabled by default.
+Forms validate in the browser. Optional free delivery uses Web3Forms.
 
 If delivery is not configured, the UI explains that clearly and **does not** claim the enquiry was emailed.
 
@@ -84,7 +81,11 @@ Replace placeholders with genuine Abel Solutions photography only.
 
 Guide: [docs/PROJECT_IMAGES.md](docs/PROJECT_IMAGES.md)
 
-## Deployment
+## Deployment (free public link)
+
+Hosted on **GitHub Pages** so visitors only need a link:
+
+**https://mrlucien-johnson.github.io/AbelSolutions/**
 
 See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
@@ -96,7 +97,7 @@ See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 - Opening hours
 - Genuine project photography and reviews
 - PASMA / insurance confirmation status
-- Email delivery credentials
+- Web3Forms access key (optional form delivery)
 
 ## Documentation
 

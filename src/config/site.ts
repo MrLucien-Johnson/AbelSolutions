@@ -12,7 +12,9 @@ export const siteConfig = {
   description:
     "Abel Solutions Limited provides practical technology support — including repairs, custom PC builds and IT assistance — alongside construction services such as media walls, TV mounting, shelving and property improvements across London and surrounding areas.",
   tagline: "Technology and construction solutions you can depend on.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.abelsolutions.co.uk",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    "https://mrlucien-johnson.github.io/AbelSolutions",
   locale: "en_GB",
 
   /** PLACEHOLDER — replace with genuine contact details before launch */

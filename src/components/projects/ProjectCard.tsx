@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/content/projects";
 
@@ -37,14 +36,7 @@ export function ProjectCard({ project }: { project: Project }) {
         >
           {project.category === "technology" ? "Technology" : "Construction"}
         </p>
-        <h3 className="mb-3 text-xl">
-          <Link
-            href={`/projects/${project.slug}`}
-            className="hover:text-[var(--color-accent)]"
-          >
-            {project.title}
-          </Link>
-        </h3>
+        <h3 className="mb-3 text-xl">{project.title}</h3>
         <p className="mb-4 flex-1 text-[var(--color-slate)] leading-relaxed">
           {project.summary}
         </p>

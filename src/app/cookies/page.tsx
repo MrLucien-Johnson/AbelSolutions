@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PageHero } from "@/components/ui/BrandMark";
 import { Section } from "@/components/ui/Section";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
@@ -66,9 +67,9 @@ export default function CookiesPage() {
           <h2>5. More information</h2>
           <p>
             For personal data handling more broadly, see our{" "}
-            <a href="/privacy" className="underline underline-offset-2">
+            <Link href="/privacy" className="underline underline-offset-2">
               Privacy Policy
-            </a>
+            </Link>
             .
           </p>
         </div>

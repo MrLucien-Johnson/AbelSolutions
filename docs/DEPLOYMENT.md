@@ -1,37 +1,42 @@
-# Deployment
+# Deployment (GitHub Pages — free)
 
-## Recommended platforms
+The live public site is intended for **GitHub Pages**. Visitors only need a link. Your computer does not need to stay on.
 
-- Vercel
-- Netlify
-- Any Node host supporting Next.js standalone/output as preferred
+## Public URL
 
-## Checklist before go-live
+https://mrlucien-johnson.github.io/AbelSolutions/
 
-1. Set `NEXT_PUBLIC_SITE_URL` to the live domain
-2. Add confirmed email / telephone / company number
-3. Replace the temporary text logo if artwork is ready
-4. Configure email delivery or leave it disabled with clear UI messaging
-5. Review Privacy, Cookies and Terms with a solicitor/owner
-6. Add genuine projects only when approved
-7. Run `npm run validate`
-8. Confirm `robots.txt` and `sitemap.xml` resolve on the live domain
+## One-time Pages setting
 
-## Build
+In the repository on GitHub:
+
+1. Open **Settings → Pages**
+2. Under **Build and deployment → Source**, choose **GitHub Actions**
+3. Save
+
+After that, every push to `main` rebuilds and publishes the site automatically.
+
+## Manual publish from this branch
 
 ```bash
-npm install
-npm run build
-npm run start
+npm ci
+npm run build:pages
+touch out/.nojekyll
 ```
 
-## Security notes
+Then publish the `out/` folder to the `gh-pages` branch (or rely on the Actions workflow on `main`).
 
-- Do not commit `.env.local`
-- Keep `EMAIL_DELIVERY_ENABLED=false` until credentials are ready
-- Security headers are applied via `src/proxy.ts`
-- `/api/*` is disallowed in `robots.ts`
+## Checklist before sharing widely
 
-## Caching
+1. Confirm the Pages URL loads
+2. Add contact email/phone when ready (GitHub Actions secrets or `src/config/site.ts`)
+3. Optional: add `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` so quote/contact forms can deliver
+4. Replace the temporary text logo when artwork is ready
+5. Review legal page drafts
 
-Static pages are generated at build time where possible. API routes remain dynamic and uncached.
+## Local preview of the Pages build
+
+```bash
+npm run build:pages
+npx --yes serve out
+```

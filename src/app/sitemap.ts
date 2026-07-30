@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 import { getProjects } from "@/content/projects";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url.replace(/\/$/, "");
   const staticRoutes = [
@@ -20,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const projectRoutes = getProjects()
     .filter((project) => !project.isPlaceholder)
     .map((project) => ({
-      url: `${base}/projects/${project.slug}`,
+      url: `${base}/projects/${project.slug}/`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.6,

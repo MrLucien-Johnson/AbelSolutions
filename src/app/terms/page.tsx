@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PageHero } from "@/components/ui/BrandMark";
 import { Section } from "@/components/ui/Section";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
@@ -95,9 +96,9 @@ export default function TermsPage() {
           <h2>8. Privacy</h2>
           <p>
             Personal information is handled as described in our{" "}
-            <a href="/privacy" className="underline underline-offset-2">
+            <Link href="/privacy" className="underline underline-offset-2">
               Privacy Policy
-            </a>
+            </Link>
             .
           </p>
 
@@ -111,9 +112,9 @@ export default function TermsPage() {
           <h2>10. Contact</h2>
           <p>
             Questions about these terms can be sent using the details on our{" "}
-            <a href="/contact" className="underline underline-offset-2">
+            <Link href="/contact" className="underline underline-offset-2">
               Contact
-            </a>{" "}
+            </Link>{" "}
             page once business contact details are published.
           </p>
         </div>

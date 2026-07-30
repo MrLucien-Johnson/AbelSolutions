@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PageHero } from "@/components/ui/BrandMark";
 import { Section } from "@/components/ui/Section";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
@@ -109,9 +110,9 @@ export default function PrivacyPage() {
           <h2>8. Cookies and analytics</h2>
           <p>
             See our{" "}
-            <a href="/cookies" className="underline underline-offset-2">
+            <Link href="/cookies" className="underline underline-offset-2">
               Cookie Policy
-            </a>
+            </Link>
             . Non-essential tracking cookies are not enabled by default on this
             website.
           </p>

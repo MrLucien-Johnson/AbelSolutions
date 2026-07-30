@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { contactFormSchema } from "@/lib/validation";
+import { submitEnquiry } from "@/lib/submit-enquiry";
 import { cn } from "@/lib/utils";
 
 type FormValues = {
@@ -68,48 +69,54 @@ export function ContactForm() {
       return;
     }
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(parsed.data),
-      });
-      const data = (await response.json()) as {
-        ok: boolean;
-        delivery?: string;
-        message?: string;
-      };
+    const data = parsed.data;
+    const textBody = [
+      "New contact message — Abel Solutions website",
+      "",
+      `Name: ${data.fullName}`,
+      `Email: ${data.email}`,
+      `Telephone: ${data.telephone || "Not provided"}`,
+      `Subject: ${data.subject}`,
+      "",
+      "Message:",
+      data.message,
+    ].join("\n");
 
-      if (!response.ok) {
-        setSubmitState({
-          status: "error",
-          message:
-            data.message ??
-            "We could not process your message. Please try again shortly.",
-        });
-        return;
-      }
-
-      if (data.delivery === "sent") {
-        setSubmitState({ status: "sent" });
-        setValues(blankValues);
-        setErrors({});
-        return;
-      }
-
-      setSubmitState({
-        status: "accepted_offline",
-        message:
-          data.message ??
-          "Your message was validated, but email delivery is not configured yet. Please use the contact placeholders on this page once real details are published, or arrange delivery setup as described in the project documentation.",
-      });
-    } catch {
-      setSubmitState({
-        status: "error",
-        message:
-          "A network error occurred. Please check your connection and try again.",
-      });
+    if (data.companyWebsite) {
+      setSubmitState({ status: "sent" });
+      setValues(blankValues);
+      setErrors({});
+      return;
     }
+
+    const result = await submitEnquiry({
+      type: "contact",
+      subject: `Contact — ${data.subject} — ${data.fullName}`,
+      replyTo: data.email,
+      textBody,
+      fields: {
+        fullName: data.fullName,
+        telephone: data.telephone || "",
+        subject: data.subject,
+      },
+    });
+
+    if (result.status === "sent") {
+      setSubmitState({ status: "sent" });
+      setValues(blankValues);
+      setErrors({});
+      return;
+    }
+
+    if (result.status === "failed") {
+      setSubmitState({ status: "error", message: result.message });
+      return;
+    }
+
+    setSubmitState({
+      status: "accepted_offline",
+      message: result.message,
+    });
   }
 
   if (submitState.status === "sent") {

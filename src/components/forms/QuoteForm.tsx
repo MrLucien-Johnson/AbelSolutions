@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/Button";
 import {
   budgetRangeLabels,
   quoteFormSchema,
+  preferredContactLabels,
+  serviceCategoryLabels,
   type QuoteFormValues,
 } from "@/lib/validation";
+import { submitEnquiry } from "@/lib/submit-enquiry";
 import { cn } from "@/lib/utils";
 
 type FormState = {
@@ -86,48 +89,60 @@ export function QuoteForm({ defaultCategory }: { defaultCategory?: string }) {
       return;
     }
 
-    try {
-      const response = await fetch("/api/quote", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(parsed.data),
-      });
-      const data = (await response.json()) as {
-        ok: boolean;
-        delivery?: string;
-        message?: string;
-      };
+    const data = parsed.data;
+    const textBody = [
+      "New quote request — Abel Solutions website",
+      "",
+      `Name: ${data.fullName}`,
+      `Email: ${data.email}`,
+      `Telephone: ${data.telephone}`,
+      `Area / postcode: ${data.postcodeOrArea}`,
+      `Service category: ${serviceCategoryLabels[data.serviceCategory]}`,
+      `Preferred contact: ${preferredContactLabels[data.preferredContact]}`,
+      `Preferred timeframe: ${data.preferredTimeframe || "Not specified"}`,
+      `Budget range: ${budgetRangeLabels[data.budgetRange ?? ""] ?? "Not specified"}`,
+      "",
+      "Description:",
+      data.description,
+    ].join("\n");
 
-      if (!response.ok) {
-        setSubmitState({
-          status: "error",
-          message:
-            data.message ??
-            "We could not process your request. Please try again shortly.",
-        });
-        return;
-      }
-
-      if (data.delivery === "sent") {
-        setSubmitState({ status: "sent" });
-        setValues(blankValues);
-        setErrors({});
-        return;
-      }
-
-      setSubmitState({
-        status: "accepted_offline",
-        message:
-          data.message ??
-          "Your details were validated, but email delivery is not configured on this website yet. Please contact Abel Solutions directly using the details on the Contact page, or try again once email delivery has been set up.",
-      });
-    } catch {
-      setSubmitState({
-        status: "error",
-        message:
-          "A network error occurred. Please check your connection and try again.",
-      });
+    // Honeypot trip — do not deliver
+    if (data.companyWebsite) {
+      setSubmitState({ status: "sent" });
+      setValues(blankValues);
+      setErrors({});
+      return;
     }
+
+    const result = await submitEnquiry({
+      type: "quote",
+      subject: `Quote request — ${data.serviceCategory} — ${data.fullName}`,
+      replyTo: data.email,
+      textBody,
+      fields: {
+        fullName: data.fullName,
+        telephone: data.telephone,
+        postcodeOrArea: data.postcodeOrArea,
+        serviceCategory: data.serviceCategory,
+      },
+    });
+
+    if (result.status === "sent") {
+      setSubmitState({ status: "sent" });
+      setValues(blankValues);
+      setErrors({});
+      return;
+    }
+
+    if (result.status === "failed") {
+      setSubmitState({ status: "error", message: result.message });
+      return;
+    }
+
+    setSubmitState({
+      status: "accepted_offline",
+      message: result.message,
+    });
   }
 
   if (submitState.status === "sent") {

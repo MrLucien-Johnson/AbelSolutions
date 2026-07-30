@@ -85,10 +85,6 @@ export function getProjects(): Project[] {
   const showPlaceholders =
     process.env.NEXT_PUBLIC_SHOW_PLACEHOLDER_PROJECTS === "true";
 
-  if (process.env.NODE_ENV === "production" && !showPlaceholders) {
-    return liveProjects;
-  }
-
   if (showPlaceholders || process.env.NODE_ENV !== "production") {
     return [...liveProjects, ...placeholderProjects];
   }
@@ -97,7 +93,9 @@ export function getProjects(): Project[] {
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {
-  return getProjects().find((project) => project.slug === slug);
+  return [...liveProjects, ...placeholderProjects].find(
+    (project) => project.slug === slug,
+  );
 }
 
 export function getLiveProjectCount(): number {

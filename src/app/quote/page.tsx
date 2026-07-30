@@ -1,4 +1,4 @@
-import { QuoteForm } from "@/components/forms/QuoteForm";
+import { QuoteFormSection } from "@/components/forms/QuoteFormSection";
 import { PageHero } from "@/components/ui/BrandMark";
 import { Section } from "@/components/ui/Section";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
@@ -11,14 +11,7 @@ export const metadata = createPageMetadata({
   path: "/quote",
 });
 
-type Props = {
-  searchParams: Promise<{ service?: string }>;
-};
-
-export default async function QuotePage({ searchParams }: Props) {
-  const params = await searchParams;
-  const defaultCategory = params.service;
-
+export default function QuotePage() {
   return (
     <>
       <BreadcrumbJsonLd
@@ -50,13 +43,13 @@ export default async function QuotePage({ searchParams }: Props) {
               </li>
             </ol>
             <p className="mt-8 notice-banner">
-              Email delivery depends on server configuration. If delivery is not
-              yet enabled, the form will validate your details and explain that
-              the enquiry could not be emailed automatically — it will not claim
-              a message was sent when it was not.
+              Email delivery depends on configuration. If a free form endpoint
+              has not been connected yet, the form will validate your details and
+              explain that the enquiry could not be delivered automatically — it
+              will not claim a message was sent when it was not.
             </p>
           </div>
-          <QuoteForm defaultCategory={defaultCategory} />
+          <QuoteFormSection />
         </div>
       </Section>
     </>
