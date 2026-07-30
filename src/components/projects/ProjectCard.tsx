@@ -50,6 +50,10 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
           <span className="absolute left-3 top-3 rounded-md bg-[var(--color-navy)] px-2.5 py-1 text-xs font-semibold text-white">
             Development placeholder
           </span>
+        ) : project.status === "coming-soon" ? (
+          <span className="absolute left-3 top-3 rounded-md bg-[var(--color-construction)] px-2.5 py-1 text-xs font-semibold text-white">
+            Coming soon
+          </span>
         ) : (
           <span className="absolute left-3 top-3 rounded-md bg-[var(--color-accent)] px-2.5 py-1 text-xs font-semibold text-white">
             Live example

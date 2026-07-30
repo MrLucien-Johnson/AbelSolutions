@@ -3,6 +3,7 @@ import {
   getProjects,
   getLiveProjectCount,
   getFeaturedProjects,
+  getUpcomingProjects,
 } from "@/content/projects";
 
 describe("projects content", () => {
@@ -12,7 +13,19 @@ describe("projects content", () => {
     const featured = getFeaturedProjects(1)[0];
     expect(featured?.slug).toBe("programming-foundations-course");
     expect(featured?.isPlaceholder).toBe(false);
+    expect(featured?.status).toBe("live");
     expect(featured?.externalUrl).toContain("programming-foundations-course");
+  });
+
+  it("lists mobile access tower work under future projects", () => {
+    const upcoming = getUpcomingProjects();
+    expect(upcoming.some((project) => project.slug === "mobile-access-tower")).toBe(
+      true,
+    );
+    for (const project of upcoming) {
+      expect(project.status).toBe("coming-soon");
+      expect(project.isPlaceholder).toBe(false);
+    }
   });
 
   it("marks any returned placeholders clearly", () => {

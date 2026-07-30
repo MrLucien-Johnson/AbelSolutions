@@ -4,12 +4,17 @@
  * Do not invent customer projects, reviews or results.
  * Entries marked `isPlaceholder: true` are development samples only
  * and are excluded from production builds by default.
+ *
+ * Use `status: "coming-soon"` for genuine work where photography is
+ * prepared but not yet ready to feature as a finished case study.
  */
 
 export type ProjectImage = {
   src: string;
   alt: string;
 };
+
+export type ProjectStatus = "live" | "coming-soon";
 
 export type Project = {
   slug: string;
@@ -25,6 +30,7 @@ export type Project = {
   testimonial?: string;
   images: ProjectImage[];
   isPlaceholder: boolean;
+  status: ProjectStatus;
   /** Optional public link to a live demo, course or case study page */
   externalUrl?: string;
   ctaLabel?: string;
@@ -56,6 +62,7 @@ const placeholderProjects: Project[] = [
       },
     ],
     isPlaceholder: true,
+    status: "live",
   },
   {
     slug: "placeholder-custom-pc",
@@ -78,6 +85,7 @@ const placeholderProjects: Project[] = [
       },
     ],
     isPlaceholder: true,
+    status: "live",
   },
 ];
 
@@ -112,25 +120,64 @@ const liveProjects: Project[] = [
       },
     ],
     isPlaceholder: false,
+    status: "live",
     externalUrl:
       "https://mrlucien-johnson.github.io/programming-foundations-course/",
     ctaLabel: "View the course website",
   },
 ];
 
+/**
+ * Genuine upcoming examples — photography or final copy still being prepared.
+ * Shown under “Future projects”. Do not invent certifications or client results.
+ */
+const upcomingProjects: Project[] = [
+  {
+    slug: "mobile-access-tower",
+    title: "Mobile access tower site work",
+    category: "construction",
+    summary:
+      "Site photography from mobile access tower work is being prepared for the gallery — showing careful setup, PPE and practical construction access support.",
+    location: "London area",
+    services: [
+      "Mobile access tower support",
+      "Site labour",
+      "Safe working at height practices",
+    ],
+    challenge:
+      "Present construction access capability clearly for future clients without publishing unfinished case studies or unconfirmed certification claims.",
+    solution:
+      "Prepare approved on-site photography of tower work and PPE standards, then publish a finished case study once images and wording are signed off.",
+    outcome:
+      "A construction example clients can review alongside technology work, with honest scope and safety notes.",
+    images: [
+      {
+        src: "/images/projects/mobile-access-tower/cover.svg",
+        alt: "Cover graphic for upcoming mobile access tower site photography",
+      },
+    ],
+    isPlaceholder: false,
+    status: "coming-soon",
+  },
+];
+
+function publishedProjects(): Project[] {
+  return [...liveProjects, ...upcomingProjects];
+}
+
 export function getProjects(): Project[] {
   const showPlaceholders =
     process.env.NEXT_PUBLIC_SHOW_PLACEHOLDER_PROJECTS === "true";
 
   if (showPlaceholders || process.env.NODE_ENV !== "production") {
-    return [...liveProjects, ...placeholderProjects];
+    return [...publishedProjects(), ...placeholderProjects];
   }
 
-  return liveProjects;
+  return publishedProjects();
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {
-  return [...liveProjects, ...placeholderProjects].find(
+  return [...publishedProjects(), ...placeholderProjects].find(
     (project) => project.slug === slug,
   );
 }
@@ -141,6 +188,12 @@ export function getLiveProjectCount(): number {
 
 export function getFeaturedProjects(limit = 3): Project[] {
   return getProjects()
-    .filter((project) => !project.isPlaceholder)
+    .filter((project) => !project.isPlaceholder && project.status === "live")
     .slice(0, limit);
+}
+
+export function getUpcomingProjects(): Project[] {
+  return getProjects().filter(
+    (project) => !project.isPlaceholder && project.status === "coming-soon",
+  );
 }

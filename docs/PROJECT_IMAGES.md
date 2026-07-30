@@ -24,6 +24,16 @@ They are referenced by sample project entries with `isPlaceholder: true`.
 4. Provide width-appropriate images; lazy-load below the fold
 5. Remove or keep placeholder samples behind `NEXT_PUBLIC_SHOW_PLACEHOLDER_PROJECTS`
 
+## Future projects
+
+Use `status: "coming-soon"` for genuine work where photography is still being prepared. These appear in the **Future projects** section on `/projects`.
+
+Example folder: `public/images/projects/mobile-access-tower/`
+
+- Drop approved Abel Solutions site photography there (see the folder README)
+- Do **not** publish PASMA Ltd copyrighted training slides
+- Do **not** claim PASMA certification until `siteConfig.credentials.pasmaConfirmed` is true
+
 ## Production filtering
 
 Placeholder projects are excluded from production builds unless `NEXT_PUBLIC_SHOW_PLACEHOLDER_PROJECTS=true`.

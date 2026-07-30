@@ -7,24 +7,28 @@ import {
   getProjects,
   getLiveProjectCount,
   getFeaturedProjects,
+  getUpcomingProjects,
 } from "@/content/projects";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
   title: "Projects",
   description:
-    "Browse Abel Solutions project examples, including technology work such as the Programming Foundations course website, plus construction case studies as photography becomes available.",
+    "Browse Abel Solutions project examples, including technology work such as the Programming Foundations course website, plus construction case studies and future project photography as it becomes available.",
   path: "/projects",
 });
 
 export default function ProjectsPage() {
-  const projects = getProjects().filter((project) => !project.isPlaceholder);
+  const liveProjects = getProjects().filter(
+    (project) => !project.isPlaceholder && project.status === "live",
+  );
+  const upcoming = getUpcomingProjects();
   const placeholders = getProjects().filter((project) => project.isPlaceholder);
   const liveCount = getLiveProjectCount();
   const featured = getFeaturedProjects(1)[0];
   const remaining = featured
-    ? projects.filter((project) => project.slug !== featured.slug)
-    : projects;
+    ? liveProjects.filter((project) => project.slug !== featured.slug)
+    : liveProjects;
 
   return (
     <>
@@ -88,7 +92,23 @@ export default function ProjectsPage() {
         ) : null}
       </Section>
 
-      <Section tone="white">
+      {upcoming.length > 0 ? (
+        <Section tone="white" ariaLabelledby="future-projects">
+          <SectionHeading
+            id="future-projects"
+            eyebrow="Future projects"
+            title="Construction photography in preparation."
+            description="Approved site photos from mobile access tower and construction work will appear here once they are ready for publication. We do not invent certifications or unfinished case studies."
+          />
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {upcoming.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        </Section>
+      ) : null}
+
+      <Section tone="soft">
         <QuoteCta
           title="Have a project in mind?"
           description="Share your requirements and we will advise on suitability, next steps and quotation needs."
