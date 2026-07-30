@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/config/site";
 
+/**
+ * Primary site brand mark: refined text wordmark.
+ * Optional logoImage (when supplied) appears as a compact mark beside the wordmark
+ * and can later be reused for favicon or other placements without replacing the text.
+ */
 export function BrandMark({
   className,
   tone = "dark",
@@ -8,30 +14,67 @@ export function BrandMark({
   className?: string;
   tone?: "dark" | "light";
 }) {
+  const logoImage = siteConfig.brand.logoImage;
+
   return (
     <Link
       href="/"
       className={cn(
-        "group inline-flex flex-col leading-none focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 rounded-sm",
+        "group inline-flex items-center gap-3 rounded-sm leading-none",
+        "focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4",
         className,
       )}
       aria-label="Abel Solutions — home"
     >
-      <span
-        className={cn(
-          "font-[family-name:var(--font-outfit)] text-[1.05rem] font-bold tracking-[0.14em]",
-          tone === "light" ? "text-white" : "text-[var(--color-navy)]",
-        )}
-      >
-        ABEL SOLUTIONS
-      </span>
-      <span
-        className={cn(
-          "mt-1 text-[0.65rem] font-medium tracking-[0.04em]",
-          tone === "light" ? "text-white/65" : "text-[var(--color-muted)]",
-        )}
-      >
-        Technology · Construction
+      {logoImage ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={logoImage}
+          alt=""
+          width={36}
+          height={36}
+          className="h-9 w-9 object-contain"
+        />
+      ) : (
+        <span
+          className={cn(
+            "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] border",
+            tone === "light"
+              ? "border-white/25 bg-white/10 text-white"
+              : "border-[var(--color-border-strong)] bg-[var(--color-accent-soft)] text-[var(--color-navy)]",
+          )}
+          aria-hidden="true"
+        >
+          <span className="font-[family-name:var(--font-outfit)] text-[0.72rem] font-bold tracking-[0.06em]">
+            AS
+          </span>
+        </span>
+      )}
+
+      <span className="inline-flex flex-col">
+        <span
+          className={cn(
+            "font-[family-name:var(--font-outfit)] text-[1.02rem] font-bold tracking-[0.12em]",
+            tone === "light" ? "text-white" : "text-[var(--color-navy)]",
+          )}
+        >
+          ABEL&nbsp;SOLUTIONS
+        </span>
+        <span
+          className={cn(
+            "mt-1.5 h-0.5 w-10 rounded-full",
+            tone === "light" ? "bg-[var(--color-accent)]" : "bg-[var(--color-accent)]",
+          )}
+          aria-hidden="true"
+        />
+        <span
+          className={cn(
+            "mt-1.5 text-[0.62rem] font-medium tracking-[0.08em] uppercase",
+            tone === "light" ? "text-white/65" : "text-[var(--color-muted)]",
+          )}
+        >
+          Technology · Construction
+        </span>
       </span>
     </Link>
   );

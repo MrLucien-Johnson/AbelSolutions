@@ -124,9 +124,7 @@ export function Footer() {
           <p>
             © {year} {siteConfig.legalName}. All rights reserved.
           </p>
-          <p>
-            Temporary text brand mark in use until an official logo is supplied.
-          </p>
+          <p>{siteConfig.brand.logoNote}</p>
         </div>
       </div>
     </footer>

@@ -110,4 +110,4 @@ See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Brand note
 
-The header and footer currently use a **temporary text-based brand mark** (“ABEL SOLUTIONS”) because no official logo was present in the repository. Replace it when artwork is supplied.
+The primary brand mark is the refined **ABEL SOLUTIONS** text wordmark. When an official logo is supplied, add it via `siteConfig.brand.logoImage` for secondary placements without removing the wordmark.

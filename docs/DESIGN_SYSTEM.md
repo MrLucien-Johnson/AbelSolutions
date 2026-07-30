@@ -48,4 +48,4 @@ Light fade-up on the homepage hero only, disabled under `prefers-reduced-motion`
 
 ## Logo
 
-Temporary text brand mark until official artwork is supplied. Documented in the footer and README.
+Primary brand mark is the refined **ABEL SOLUTIONS** text wordmark with a compact AS monogram. When an official logo file is supplied, set `siteConfig.brand.logoImage` (for example `/images/logo.svg`) so it can appear beside the wordmark and be reused for favicon or other placements without replacing the text.

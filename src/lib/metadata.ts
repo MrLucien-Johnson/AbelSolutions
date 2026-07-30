@@ -31,11 +31,20 @@ export function createPageMetadata({
       siteName: siteConfig.name,
       locale: siteConfig.locale,
       type: "website",
+      images: [
+        {
+          url: absoluteUrl(siteConfig.ogImage.path),
+          width: siteConfig.ogImage.width,
+          height: siteConfig.ogImage.height,
+          alt: siteConfig.ogImage.alt,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
+      images: [absoluteUrl(siteConfig.ogImage.path)],
     },
     robots: noIndex
       ? { index: false, follow: false }

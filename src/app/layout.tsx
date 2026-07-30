@@ -56,11 +56,20 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: `${siteConfig.name} | Technology & Construction Solutions`,
     description: siteConfig.description,
+    images: [
+      {
+        url: absoluteUrl(siteConfig.ogImage.path),
+        width: siteConfig.ogImage.width,
+        height: siteConfig.ogImage.height,
+        alt: siteConfig.ogImage.alt,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteConfig.name} | Technology & Construction Solutions`,
     description: siteConfig.description,
+    images: [absoluteUrl(siteConfig.ogImage.path)],
   },
   robots: {
     index: true,

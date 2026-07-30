@@ -51,8 +51,8 @@ export const siteConfig = {
 
   social: {
     instagram: {
-      handle: "@abelsolutionslimited",
-      url: "https://www.instagram.com/abelsolutionslimited",
+      handle: "@AbelSolutionsLimited",
+      url: "https://www.instagram.com/AbelSolutionsLimited",
     },
   },
 
@@ -68,12 +68,22 @@ export const siteConfig = {
 
   brand: {
     /**
-     * Text-based temporary brand mark.
-     * Replace with the official Abel Solutions logo when available.
+     * Primary brand mark is the refined text wordmark.
+     * When an official logo file is supplied, set logoImage to its public path
+     * (for example "/images/logo.svg"). The logo can then be used in favicon,
+     * social cards or secondary placements without replacing the wordmark.
      */
-    logoType: "text-placeholder" as const,
+    logoType: "text" as const,
+    logoImage: null as string | null,
     logoNote:
-      "Using a temporary text-based brand mark until an official logo is supplied.",
+      "Primary brand mark is the ABEL SOLUTIONS text wordmark. A supplied logo can be added separately later.",
+  },
+
+  ogImage: {
+    path: "/images/og-default.png",
+    alt: "Abel Solutions — Technology and Construction",
+    width: 1200,
+    height: 630,
   },
 } as const;
 
