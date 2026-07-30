@@ -30,8 +30,8 @@ Use `status: "coming-soon"` for genuine work where photography is still being pr
 
 Example folder: `public/images/projects/mobile-access-tower/`
 
-- Drop approved Abel Solutions site photography there (see the folder README)
-- Do **not** publish PASMA Ltd copyrighted training slides
+- **Include only** approved Abel Solutions on-site photography (for example the tower / PPE site photo)
+- **Do not include** PASMA training slides or photos of PASMA course screens (© PASMA Ltd)
 - Do **not** claim PASMA certification until `siteConfig.credentials.pasmaConfirmed` is true
 
 ## Production filtering

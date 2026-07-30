@@ -98,7 +98,7 @@ export default function ProjectsPage() {
             id="future-projects"
             eyebrow="Future projects"
             title="Construction photography in preparation."
-            description="Approved site photos from mobile access tower and construction work will appear here once they are ready for publication. We do not invent certifications or unfinished case studies."
+            description="Approved on-site photos from mobile access tower and construction work will appear here once ready. Training slides and unconfirmed certifications are not published."
           />
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {upcoming.map((project) => (
