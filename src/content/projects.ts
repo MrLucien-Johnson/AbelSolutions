@@ -25,6 +25,9 @@ export type Project = {
   testimonial?: string;
   images: ProjectImage[];
   isPlaceholder: boolean;
+  /** Optional public link to a live demo, course or case study page */
+  externalUrl?: string;
+  ctaLabel?: string;
 };
 
 /**
@@ -78,8 +81,42 @@ const placeholderProjects: Project[] = [
   },
 ];
 
-/** Genuine projects — add entries here as approved photography and copy become available */
-const liveProjects: Project[] = [];
+/**
+ * Genuine published work.
+ * Only include real projects, courses or case studies that Abel Solutions can stand behind.
+ */
+const liveProjects: Project[] = [
+  {
+    slug: "programming-foundations-course",
+    title: "Programming Foundations course",
+    category: "technology",
+    summary:
+      "A beginner-friendly programming course site covering Python, C# and AI prompt creation, built to take learners from first steps through to portfolio-ready projects.",
+    location: "Online",
+    services: [
+      "Website and course structure",
+      "Python learning pathway",
+      "C# learning pathway",
+      "AI prompt creation track",
+    ],
+    challenge:
+      "Create a clear, approachable learning hub for people with little or no programming experience, without overwhelming them on the first visit.",
+    solution:
+      "Organised the course into practical modules for Python and C#, plus an AI prompt creation track, with guided starting points and project-based outcomes learners can show to employers.",
+    outcome:
+      "A live public course website that presents the learning pathways cleanly and gives future clients a concrete example of Abel Solutions technology and web work.",
+    images: [
+      {
+        src: "/images/projects/programming-foundations.svg",
+        alt: "Cover graphic for the Programming Foundations course covering Python, C# and AI prompts",
+      },
+    ],
+    isPlaceholder: false,
+    externalUrl:
+      "https://mrlucien-johnson.github.io/programming-foundations-course/",
+    ctaLabel: "View the course website",
+  },
+];
 
 export function getProjects(): Project[] {
   const showPlaceholders =
@@ -100,4 +137,10 @@ export function getProjectBySlug(slug: string): Project | undefined {
 
 export function getLiveProjectCount(): number {
   return liveProjects.length;
+}
+
+export function getFeaturedProjects(limit = 3): Project[] {
+  return getProjects()
+    .filter((project) => !project.isPlaceholder)
+    .slice(0, limit);
 }

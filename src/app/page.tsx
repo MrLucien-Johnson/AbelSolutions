@@ -14,13 +14,12 @@ import {
   processSteps,
   whyChoose,
 } from "@/content/services";
-import { getProjects, getLiveProjectCount } from "@/content/projects";
+import { getFeaturedProjects } from "@/content/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import Link from "next/link";
 
 export default function HomePage() {
-  const projects = getProjects().slice(0, 3);
-  const liveCount = getLiveProjectCount();
+  const projects = getFeaturedProjects(3);
 
   return (
     <>
@@ -142,14 +141,18 @@ export default function HomePage() {
           id="projects-heading"
           eyebrow="Projects"
           title="Work we can show with confidence."
-          description="Genuine project photography and case studies will appear here as approved examples become available. We do not invent reviews or results."
+          description="Genuine examples from Abel Solutions. More construction and technology case studies will be added as approved photography becomes available."
         />
         {projects.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {projects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
-            ))}
-          </div>
+          projects.length === 1 ? (
+            <ProjectCard project={projects[0]} featured />
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {projects.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </div>
+          )
         ) : (
           <EmptyState
             title="Project gallery coming soon"
@@ -158,7 +161,7 @@ export default function HomePage() {
         )}
         <div className="mt-8">
           <Button href="/projects" variant="secondary">
-            View projects{liveCount > 0 ? "" : " page"}
+            View projects
           </Button>
         </div>
       </Section>
