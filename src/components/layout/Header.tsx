@@ -55,7 +55,7 @@ export function Header() {
                   <Link
                     href={link.href}
                     className={cn(
-                      "rounded-md px-3 py-2 text-[0.95rem] font-medium transition-colors",
+                      "rounded-[var(--radius-md)] px-3 py-2 text-base font-medium transition-colors",
                       active
                         ? "text-[var(--color-accent)]"
                         : "text-[var(--color-slate)] hover:text-[var(--color-navy)]",
@@ -78,7 +78,7 @@ export function Header() {
           <button
             ref={menuButtonRef}
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-[var(--color-border)] text-[var(--color-navy)] lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] text-[var(--color-navy)] lg:hidden"
             aria-expanded={open}
             aria-controls={panelId}
             aria-label={open ? "Close menu" : "Open menu"}

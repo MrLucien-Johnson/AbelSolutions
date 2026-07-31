@@ -36,7 +36,7 @@ export default function ContactPage() {
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <aside className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-soft)] p-7 space-y-6">
             <div>
-              <h2 className="mb-4 text-xl">Contact details</h2>
+              <h3 className="mb-4">Contact details</h3>
               <dl className="space-y-4 text-[var(--color-slate)]">
                 <div>
                   <dt className="text-sm text-[var(--color-muted)]">Email</dt>

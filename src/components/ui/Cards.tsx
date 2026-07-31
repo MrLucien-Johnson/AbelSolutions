@@ -26,13 +26,13 @@ export function DivisionCard({
     >
       <div
         className={cn(
-          "mb-6 h-1.5 w-14 rounded-full",
+          "mb-6 h-1.5 w-14 rounded-[var(--radius-sm)]",
           isTech ? "bg-[var(--color-accent)]" : "bg-[var(--color-construction)]",
         )}
         aria-hidden="true"
       />
       <h3 className="mb-4">{title}</h3>
-      <p className="mb-6 text-[var(--color-slate)] leading-relaxed">{description}</p>
+      <p className="mb-6 text-[var(--color-slate)] leading-body">{description}</p>
       <ul className="mb-8 space-y-2.5 text-[var(--color-slate)]">
         {points.map((point) => (
           <li key={point} className="flex gap-3">
@@ -65,8 +65,8 @@ export function FeatureCard({
 }) {
   return (
     <article className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 md:p-7">
-      <h3 className="mb-3 text-xl">{title}</h3>
-      <p className="text-[var(--color-slate)] leading-relaxed">{description}</p>
+      <h3 className="mb-3">{title}</h3>
+      <p className="text-[var(--color-slate)] leading-body">{description}</p>
     </article>
   );
 }
@@ -86,7 +86,7 @@ export function ServiceCard({
     <article className="group flex h-full flex-col rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 md:p-7 transition-colors hover:border-[var(--color-border-strong)]">
       <p
         className={cn(
-          "mb-4 text-xs font-semibold uppercase tracking-[0.08em]",
+          "type-label mb-4",
           division === "technology"
             ? "text-[var(--color-accent)]"
             : "text-[var(--color-construction)]",
@@ -94,7 +94,7 @@ export function ServiceCard({
       >
         {division === "technology" ? "Technology" : "Construction"}
       </p>
-      <h3 className="mb-3 text-xl">
+      <h3 className="mb-3">
         <Link
           href={href}
           className="hover:text-[var(--color-accent)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2"
@@ -102,13 +102,10 @@ export function ServiceCard({
           {title}
         </Link>
       </h3>
-      <p className="mb-5 flex-1 text-[var(--color-slate)] leading-relaxed">
+      <p className="mb-5 flex-1 text-[var(--color-slate)] leading-body">
         {description}
       </p>
-      <Link
-        href={href}
-        className="text-sm font-semibold text-[var(--color-accent)] underline-offset-4 hover:underline"
-      >
+      <Link href={href} className="text-link">
         Learn more
         <span className="sr-only"> about {title}</span>
       </Link>
@@ -122,20 +119,20 @@ export function ProcessSteps({
   steps: Array<{ step: number; title: string; description: string }>;
 }) {
   return (
-    <ol className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
+    <ol className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {steps.map((item) => (
         <li
           key={item.step}
           className="relative rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
         >
           <span
-            className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-sm font-bold text-[var(--color-accent)]"
+            className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-soft)] text-sm font-semibold text-[var(--color-accent)]"
             aria-hidden="true"
           >
             {item.step}
           </span>
-          <h3 className="mb-3 text-lg">{item.title}</h3>
-          <p className="text-[var(--color-slate)] text-[0.95rem] leading-relaxed">
+          <h3 className="mb-3">{item.title}</h3>
+          <p className="text-[var(--color-slate)] leading-body">
             {item.description}
           </p>
         </li>
@@ -156,7 +153,7 @@ export function QuoteCta({
       <div className="grid gap-8 lg:grid-cols-[1.4fr_auto] lg:items-center">
         <div>
           <h2 className="mb-4 text-white">{title}</h2>
-          <p className="text-white/80 text-lg leading-relaxed max-w-2xl">
+          <p className="text-white/80 text-lg leading-body max-w-2xl">
             {description}
           </p>
         </div>
@@ -183,7 +180,9 @@ export function EmptyState({
   return (
     <div className="rounded-[var(--radius-lg)] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface)] px-6 py-14 text-center">
       <h3 className="mb-3">{title}</h3>
-      <p className="mx-auto max-w-xl text-[var(--color-slate)]">{description}</p>
+      <p className="mx-auto max-w-xl text-[var(--color-slate)] leading-body">
+        {description}
+      </p>
     </div>
   );
 }

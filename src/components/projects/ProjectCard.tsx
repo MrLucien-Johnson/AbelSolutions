@@ -47,15 +47,15 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
           />
         ) : null}
         {project.isPlaceholder ? (
-          <span className="absolute left-3 top-3 rounded-md bg-[var(--color-navy)] px-2.5 py-1 text-xs font-semibold text-white">
+          <span className="absolute left-3 top-3 rounded-[var(--radius-sm)] bg-[var(--color-navy)] px-2.5 py-1 text-xs font-semibold text-white">
             Development placeholder
           </span>
         ) : project.status === "coming-soon" ? (
-          <span className="absolute left-3 top-3 rounded-md bg-[var(--color-construction)] px-2.5 py-1 text-xs font-semibold text-white">
+          <span className="absolute left-3 top-3 rounded-[var(--radius-sm)] bg-[var(--color-construction)] px-2.5 py-1 text-xs font-semibold text-white">
             Coming soon
           </span>
         ) : (
-          <span className="absolute left-3 top-3 rounded-md bg-[var(--color-accent)] px-2.5 py-1 text-xs font-semibold text-white">
+          <span className="absolute left-3 top-3 rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-2.5 py-1 text-xs font-semibold text-white">
             Live example
           </span>
         )}
@@ -69,7 +69,7 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
       >
         <p
           className={cn(
-            "mb-3 text-xs font-semibold uppercase tracking-[0.08em]",
+            "type-label mb-3",
             isTechnology
               ? "text-[var(--color-accent)]"
               : "text-[var(--color-construction)]",
@@ -77,20 +77,18 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
         >
           {isTechnology ? "Technology" : "Construction"}
         </p>
-        <h3 className={cn("mb-3", featured ? "text-2xl md:text-3xl" : "text-xl")}>
-          {project.title}
-        </h3>
+        <h3 className="mb-3">{project.title}</h3>
         <p
           className={cn(
-            "mb-4 text-[var(--color-slate)] leading-relaxed",
-            featured ? "text-base" : "flex-1",
+            "mb-4 text-[var(--color-slate)] leading-body",
+            !featured && "flex-1",
           )}
         >
           {project.summary}
         </p>
 
         {featured && project.outcome ? (
-          <p className="mb-4 text-sm leading-relaxed text-[var(--color-slate)]">
+          <p className="mb-4 text-sm leading-body text-[var(--color-slate)]">
             <span className="font-semibold text-[var(--color-navy)]">
               Why it matters:{" "}
             </span>
@@ -103,7 +101,7 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
             {project.services.map((service) => (
               <li
                 key={service}
-                className="rounded-full bg-[var(--color-surface-soft)] px-2.5 py-1 text-xs font-medium text-[var(--color-slate)]"
+                className="rounded-[var(--radius-sm)] bg-[var(--color-surface-soft)] px-2.5 py-1 text-xs font-medium text-[var(--color-slate)]"
               >
                 {service}
               </li>
@@ -124,10 +122,7 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
               {project.ctaLabel ?? "View project"}
             </Button>
           ) : null}
-          <Link
-            href="/quote/"
-            className="text-sm font-semibold text-[var(--color-accent)] underline-offset-2 hover:underline"
-          >
+          <Link href="/quote/" className="text-link">
             Discuss a similar brief
           </Link>
         </div>

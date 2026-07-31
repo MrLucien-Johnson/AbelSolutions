@@ -437,7 +437,7 @@ export function QuoteForm({ defaultCategory }: { defaultCategory?: string }) {
 
 function fieldClass(error?: string) {
   return cn(
-    "w-full rounded-[10px] border bg-[var(--color-surface)] px-4 py-3 text-[var(--color-ink)]",
+    "w-full rounded-[var(--radius-md)] border bg-[var(--color-surface)] px-4 py-3 text-[var(--color-ink)]",
     "placeholder:text-[var(--color-muted)]",
     error
       ? "border-[var(--color-error)]"

@@ -47,8 +47,8 @@ export default function ConstructionServicesPage() {
             />
           </div>
           <aside className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-construction-soft)] p-6 md:p-7">
-            <h2 className="mb-3 text-xl">Important notes</h2>
-            <ul className="space-y-3 text-[var(--color-slate)]">
+            <h3 className="mb-3">Important notes</h3>
+            <ul className="space-y-3 text-[var(--color-slate)] leading-body">
               <li>
                 We are not a structural engineer, architect, gas engineer or
                 electrician.
@@ -72,7 +72,8 @@ export default function ConstructionServicesPage() {
           id={category.id}
           tone="soft"
           ariaLabelledby={`${category.id}-heading`}
-          className="!py-16 md:!py-20 border-t border-[var(--color-border)]"
+          compact
+          className="border-t border-[var(--color-border)]"
         >
           <SectionHeading
             id={`${category.id}-heading`}
@@ -85,8 +86,8 @@ export default function ConstructionServicesPage() {
                 key={item.title}
                 className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
               >
-                <h3 className="mb-3 text-lg">{item.title}</h3>
-                <p className="text-[var(--color-slate)] leading-relaxed">
+                <h3 className="mb-3">{item.title}</h3>
+                <p className="text-[var(--color-slate)] leading-body">
                   {item.description}
                 </p>
               </article>
