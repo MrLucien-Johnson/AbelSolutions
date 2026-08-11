@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Abel Solutions Promo Player</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../components/brand.css" />
+    <style>
+      #root { width: 100vw; height: 100vh; }
+      .scene {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .scene.active { opacity: 1; pointer-events: auto; }
+      .caption-bar.visible { opacity: 1; transition: opacity 0.25s ease; }
+      .warm-stage {
+        background:
+          radial-gradient(ellipse 60% 50% at 80% 20%, rgb(138 106 69 / 0.22), transparent 55%),
+          linear-gradient(165deg, #0b1c2c 0%, #1a2a22 55%, #132536 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const ratio = params.get("ratio") || "16x9";
+      const sceneSet = params.get("set") || "hero";
+
+      const CAPTURE = {
+        home: "../captures/stills/abel-home-hero.png",
+        projects: "../captures/stills/abel-projects-hero.png",
+        tech: "../captures/stills/abel-technology-hero.png",
+        construction: "../captures/stills/abel-construction-hero.png",
+        quote: "../captures/stills/abel-quote-hero.png",
+        kweyol: "../captures/stills/kweyol-home-hero.png",
+        course: "../captures/stills/course-home-hero.png",
+      };
+
+      const SETS = {
+        hero: [
+          { t: 0, dur: 4, type: "hook", eyebrow: "Abel Solutions", headline: "Two trades.\nOne clear point of contact.", sub: "Technology support and practical construction help for homes and businesses.", caption: "Technology and construction — under one brand." },
+          { t: 4, dur: 5, type: "problem", eyebrow: "The problem", headline: "Everyday work shouldn’t mean juggling three providers.", sub: "Repairs, networks, media walls and site support often sit with separate contacts.", caption: "Scattered providers slow decisions down." },
+          { t: 9, dur: 6, type: "product", eyebrow: "Abel Solutions", headline: "Practical help, scoped clearly.", sub: "From custom PCs to media walls — assessed carefully before we quote.", image: "home", caption: "Meet Abel Solutions." },
+          { t: 15, dur: 8, type: "experience", eyebrow: "See the work", headline: "Public digital projects you can open today.", sub: "Kwéyòl Dictionary and Programming Foundations — live examples of our technology delivery.", image: "projects", image2: "kweyol", caption: "Real public projects — not invented case studies." },
+          { t: 23, dur: 8, type: "benefits", eyebrow: "Why clients choose us", headline: "Clear communication.\nCareful workmanship.\nHonest quotations.", pills: ["Technology", "Construction", "London & nearby"], caption: "Plain explanations. Careful work. Honest quotes." },
+          { t: 31, dur: 8, type: "diff", eyebrow: "Differentiation", headline: "One company for tech and construction.", sub: "A single trusted contact — without inventing certifications or inflated promises.", image: "tech", image2: "construction", caption: "Dual-trade clarity without hard sell." },
+          { t: 39, dur: 8, type: "cta", eyebrow: "Next step", headline: "Request a clear quote.", sub: "Tell us what you need. We’ll advise on suitability and next steps.", cta: "Request a Quote", image: "quote", caption: "Request a quote — link in bio / website." },
+          { t: 47, dur: 8, type: "end", eyebrow: "Abel Solutions", headline: "Technology and construction solutions you can depend on.", cta: "Explore Our Services", caption: "Abel Solutions Limited" },
+        ],
+        short: [
+          { t: 0, dur: 4, type: "hook", eyebrow: "Abel Solutions", headline: "Tech + construction, without the runaround.", caption: "One trusted company." },
+          { t: 4, dur: 7, type: "product", eyebrow: "What we do", headline: "Repairs, custom PCs, media walls and site support.", image: "home", caption: "Practical help for homes and businesses." },
+          { t: 11, dur: 8, type: "experience", eyebrow: "Proof of delivery", headline: "Live projects: Kwéyòl Dictionary & Programming Foundations.", image: "kweyol", image2: "course", caption: "Open our public projects today." },
+          { t: 19, dur: 6, type: "cta", eyebrow: "Get started", headline: "Request a quote.", cta: "Request a Quote", image: "quote", caption: "Clear scope. Honest next steps." },
+          { t: 25, dur: 4, type: "end", eyebrow: "Abel Solutions", headline: "Dependable dual-trade support.", caption: "London & surrounding areas" },
+        ],
+        social15: [
+          { t: 0, dur: 3, type: "hook", eyebrow: "Stop juggling providers", headline: "Tech and construction. One company.", caption: "One clear point of contact." },
+          { t: 3, dur: 5, type: "product", eyebrow: "Abel Solutions", headline: "Repairs · PCs · Media walls · Site support", image: "home", caption: "Practical help, scoped carefully." },
+          { t: 8, dur: 4, type: "cta", eyebrow: "Next step", headline: "Request a quote today.", cta: "Request a Quote", caption: "Abel Solutions" },
+          { t: 12, dur: 3, type: "end", eyebrow: "Abel Solutions", headline: "Depend on clear work.", caption: "Explore the site" },
+        ],
+        micro: [
+          { t: 0, dur: 2.5, type: "hook", eyebrow: "Abel Solutions", headline: "Tech + Construction", caption: "One trusted company" },
+          { t: 2.5, dur: 3.5, type: "product", eyebrow: "London & nearby", headline: "Request a clear quote.", image: "home", caption: "Request a Quote" },
+          { t: 6, dur: 2.5, type: "end", eyebrow: "Abel Solutions", headline: "Dependable support.", caption: "Abel Solutions" },
+        ],
+        explainer: [
+          { t: 0, dur: 5, type: "hook", eyebrow: "Explainer", headline: "What Abel Solutions actually does.", caption: "A practical dual-trade company." },
+          { t: 5, dur: 7, type: "problem", eyebrow: "The need", headline: "Homes and businesses need tech help and property work — often at the same time.", caption: "Two needs. Too many contacts." },
+          { t: 12, dur: 8, type: "product", eyebrow: "The company", headline: "Technology Services and Construction Services under one brand.", image: "home", caption: "One brand. Two clear divisions." },
+          { t: 20, dur: 10, type: "benefits", eyebrow: "Technology", headline: "Repairs, upgrades, custom PCs, networks and small-business IT support.", pills: ["Diagnostics", "Custom PCs", "Networks", "Business IT"], image: "tech", caption: "Technology support, explained clearly." },
+          { t: 30, dur: 10, type: "benefits", eyebrow: "Construction", headline: "Media walls, TV mounting, shelving, stud walls and labour support.", pills: ["Media walls", "Mounting", "Interior fitting", "Labour"], image: "construction", warm: true, caption: "Construction help, assessed for scope and safety." },
+          { t: 40, dur: 10, type: "experience", eyebrow: "Public proof", headline: "Open our live digital projects — Kwéyòl Dictionary and Programming Foundations.", image: "projects", image2: "kweyol", caption: "Genuine public work you can review." },
+          { t: 50, dur: 8, type: "diff", eyebrow: "How we work", headline: "Tell us what you need → assessment → clear quotation → arranged work.", image: "quote", caption: "A straightforward process." },
+          { t: 58, dur: 8, type: "cta", eyebrow: "Start here", headline: "Request a quote or explore services on the website.", cta: "Request a Quote", caption: "mrlucien-johnson.github.io/AbelSolutions" },
+          { t: 66, dur: 6, type: "end", eyebrow: "Abel Solutions Limited", headline: "Technology and construction solutions you can depend on.", caption: "No invented claims — only work we can stand behind." },
+        ],
+        features: [
+          { t: 0, dur: 4, type: "hook", eyebrow: "Features in practice", headline: "What you can actually use today.", caption: "Real capabilities — no fluff." },
+          { t: 4, dur: 8, type: "product", eyebrow: "Feature · Technology", headline: "Computer and laptop support with clear diagnosis before quoting.", image: "tech", caption: "Feature: practical IT support" },
+          { t: 12, dur: 8, type: "product", eyebrow: "Feature · Builds", headline: "Custom and gaming PC builds scoped to budget and workload.", image: "home", caption: "Feature: custom PC builds" },
+          { t: 20, dur: 8, type: "product", eyebrow: "Feature · Construction", headline: "Media walls and mounting planned around your room and cables.", image: "construction", warm: true, caption: "Feature: media walls & mounting" },
+          { t: 28, dur: 8, type: "experience", eyebrow: "Feature · Digital delivery", headline: "Public learning products: Kwéyòl Dictionary and Programming Foundations.", image: "kweyol", image2: "course", caption: "Feature: live digital projects" },
+          { t: 36, dur: 6, type: "cta", eyebrow: "Next", headline: "Discuss a similar brief.", cta: "Request a Quote", caption: "Request a quote" },
+          { t: 42, dur: 4, type: "end", eyebrow: "Abel Solutions", headline: "Clear work. Honest scope.", caption: "Abel Solutions" },
+        ],
+        brand: [
+          { t: 0, dur: 5, type: "hook", eyebrow: "Abel Solutions", headline: "Dependable.", caption: "" },
+          { t: 5, dur: 6, type: "product", eyebrow: "Technology", headline: "Precision when systems fail.", image: "tech", caption: "" },
+          { t: 11, dur: 6, type: "product", eyebrow: "Construction", headline: "Care when spaces change.", image: "construction", warm: true, caption: "" },
+          { t: 17, dur: 6, type: "experience", eyebrow: "Public work", headline: "Built to be opened.", image: "kweyol", caption: "" },
+          { t: 23, dur: 7, type: "end", eyebrow: "Abel Solutions", headline: "Technology and construction solutions you can depend on.", cta: "Request a Quote", caption: "Abel Solutions Limited" },
+        ],
+        autoplay: [
+          { t: 0, dur: 4, type: "hook", eyebrow: "Abel Solutions", headline: "Technology + Construction", caption: "One trusted company" },
+          { t: 4, dur: 5, type: "product", eyebrow: "For homes & businesses", headline: "Repairs · PCs · Media walls · Site support", image: "home", caption: "Practical help. Clear scope." },
+          { t: 9, dur: 5, type: "experience", eyebrow: "Public projects", headline: "Kwéyòl Dictionary · Programming Foundations", image: "projects", caption: "Open live examples today" },
+          { t: 14, dur: 6, type: "cta", eyebrow: "Next step", headline: "Request a Quote", cta: "Request a Quote", image: "quote", caption: "Request a Quote" },
+        ],
+      };
+
+      function el(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text != null) node.textContent = text;
+        return node;
+      }
+
+      function deviceBox(src, extraClass = "") {
+        const wrap = el("div", `device scale-in delay-2 ${extraClass}`);
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "";
+        wrap.appendChild(img);
+        return wrap;
+      }
+
+      function renderScene(scene, ratio) {
+        const stage = el("div", `stage ${scene.warm ? "warm-stage" : ""} ${ratio === "9x16" || ratio === "1x1" ? "vertical" : ""}`);
+        stage.appendChild(el("div", "grid-overlay"));
+
+        if (scene.type === "end") {
+          const safe = el("div", "safe end-card");
+          const brand = el("div", "brand-mark fade-in");
+          brand.innerHTML = `<span class="mono">AS</span><span class="name">ABEL SOLUTIONS</span>`;
+          safe.appendChild(brand);
+          safe.appendChild(el("div", "accent-bar fade-up delay-1"));
+          const h = el("h1", "headline fade-up delay-2");
+          h.innerHTML = scene.headline.replaceAll("\n", "<br>");
+          safe.appendChild(h);
+          if (scene.cta) safe.appendChild(el("div", "cta fade-up delay-3", scene.cta));
+          stage.appendChild(safe);
+        } else if (scene.type === "experience" || scene.type === "product" || scene.type === "diff" || scene.type === "cta") {
+          const safe = el("div", "safe");
+          if (ratio === "16x9" && scene.image) {
+            const split = el("div", "split");
+            const left = el("div", "");
+            left.appendChild(el("p", "eyebrow fade-in", scene.eyebrow || ""));
+            const h = el("h1", "headline fade-up delay-1");
+            h.innerHTML = scene.headline.replaceAll("\n", "<br>");
+            left.appendChild(h);
+            if (scene.sub) left.appendChild(el("p", "subhead fade-up delay-2", scene.sub));
+            if (scene.cta) left.appendChild(el("div", "cta fade-up delay-3", scene.cta));
+            if (scene.pills) {
+              const row = el("div", "pill-row fade-up delay-3");
+              scene.pills.forEach((p) => row.appendChild(el("span", "pill", p)));
+              left.appendChild(row);
+            }
+            split.appendChild(left);
+            const right = el("div", "");
+            right.style.position = "relative";
+            right.style.minHeight = "420px";
+            const d1 = deviceBox(CAPTURE[scene.image]);
+            d1.style.inset = "0 0 auto auto";
+            d1.style.width = "100%";
+            d1.style.height = "360px";
+            right.appendChild(d1);
+            if (scene.image2) {
+              const d2 = deviceBox(CAPTURE[scene.image2], "delay-3");
+              d2.style.position = "absolute";
+              d2.style.width = "68%";
+              d2.style.height = "220px";
+              d2.style.left = "-8%";
+              d2.style.bottom = "-8%";
+              right.appendChild(d2);
+            }
+            split.appendChild(right);
+            safe.appendChild(split);
+          } else {
+            safe.appendChild(el("p", "eyebrow fade-in", scene.eyebrow || ""));
+            const h = el("h1", "headline fade-up delay-1");
+            h.innerHTML = scene.headline.replaceAll("\n", "<br>");
+            safe.appendChild(h);
+            if (scene.sub) safe.appendChild(el("p", "subhead fade-up delay-2", scene.sub));
+            if (scene.cta) safe.appendChild(el("div", "cta fade-up delay-3", scene.cta));
+            if (scene.image) {
+              const d1 = deviceBox(CAPTURE[scene.image]);
+              d1.style.position = "relative";
+              d1.style.width = "100%";
+              d1.style.height = ratio === "1x1" ? "280px" : "340px";
+              d1.style.marginTop = "1rem";
+              safe.appendChild(d1);
+            }
+          }
+          stage.appendChild(safe);
+        } else {
+          const safe = el("div", "safe");
+          safe.appendChild(el("p", "eyebrow fade-in", scene.eyebrow || ""));
+          safe.appendChild(el("div", `accent-bar ${scene.warm ? "construction" : ""} fade-up delay-1`));
+          const h = el("h1", "headline fade-up delay-2");
+          h.innerHTML = scene.headline.replaceAll("\n", "<br>");
+          safe.appendChild(h);
+          if (scene.sub) safe.appendChild(el("p", "subhead fade-up delay-3", scene.sub));
+          if (scene.pills) {
+            const row = el("div", "pill-row fade-up delay-4");
+            scene.pills.forEach((p) => row.appendChild(el("span", "pill", p)));
+            safe.appendChild(row);
+          }
+          stage.appendChild(safe);
+        }
+
+        if (scene.caption) {
+          const cap = el("div", "caption-bar visible", scene.caption);
+          stage.appendChild(cap);
+        }
+        return stage;
+      }
+
+      const root = document.getElementById("root");
+      const scenes = SETS[sceneSet] || SETS.hero;
+      const nodes = scenes.map((scene) => {
+        const node = renderScene(scene, ratio);
+        node.classList.add("scene");
+        root.appendChild(node);
+        return { scene, node };
+      });
+
+      function activate(index) {
+        nodes.forEach((n, i) => n.node.classList.toggle("active", i === index));
+      }
+      activate(0);
+
+      // Expose control API for Playwright
+      window.__PROMO__ = {
+        scenes,
+        total: scenes.reduce((sum, s) => sum + s.dur, 0),
+        play: async () => {
+          for (let i = 0; i < nodes.length; i++) {
+            activate(i);
+            await new Promise((r) => setTimeout(r, nodes[i].scene.dur * 1000));
+          }
+        },
+      };
+      document.title = `promo:${sceneSet}:${ratio}`;
+    </script>
+  </body>
+</html>

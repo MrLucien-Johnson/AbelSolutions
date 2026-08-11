@@ -23,7 +23,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
             <BrandMark tone="light" />
-            <p className="mt-5 text-white/70 leading-relaxed max-w-sm">
+            <p className="mt-5 text-white/70 leading-body max-w-sm">
               {siteConfig.shortDescription}
             </p>
             <p className="mt-4 text-sm text-white/55">
@@ -33,9 +33,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-white/55">
-              Services
-            </h2>
+            <p className="type-eyebrow mb-4 text-white/55">Services</p>
             <ul className="space-y-2.5">
               {footerServiceLinks.map((link) => (
                 <li key={link.href}>
@@ -51,9 +49,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-white/55">
-              Contact
-            </h2>
+            <p className="type-eyebrow mb-4 text-white/55">Contact</p>
             <ul className="space-y-3 text-white/85">
               <li>
                 <span className="block text-sm text-white/55 mb-1">Email</span>
@@ -97,9 +93,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-white/55">
-              Company
-            </h2>
+            <p className="type-eyebrow mb-4 text-white/55">Company</p>
             <ul className="space-y-2.5 text-white/85">
               <li>{siteConfig.legalName}</li>
               <li>

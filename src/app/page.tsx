@@ -29,13 +29,13 @@ export default function HomePage() {
         </div>
         <div className="container-site relative grid gap-12 py-[var(--hero-y)] lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-16">
           <div>
-            <p className="fade-up mb-5 font-[family-name:var(--font-outfit)] text-sm font-semibold tracking-[0.16em] text-white/70 uppercase">
+            <p className="fade-up type-eyebrow mb-5 font-display text-white/70">
               Abel Solutions
             </p>
             <h1 className="fade-up mb-6 max-w-3xl text-white">
               Technology and construction solutions you can depend on.
             </h1>
-            <p className="fade-up-delay mb-10 max-w-2xl text-lg md:text-xl leading-relaxed text-white/80">
+            <p className="fade-up-delay mb-10 max-w-2xl text-lg md:text-xl leading-body text-white/80">
               Abel Solutions helps homes and businesses with technology support,
               repairs, installations, custom computer systems and practical
               construction services across London and surrounding areas.
@@ -101,7 +101,7 @@ export default function HomePage() {
           title="Practical help without the hard sell."
           description="We focus on clear communication, careful work and honest quotations — for homeowners, landlords and local businesses alike."
         />
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {whyChoose.map((item) => (
             <FeatureCard
               key={item.title}
@@ -140,19 +140,20 @@ export default function HomePage() {
         <SectionHeading
           id="projects-heading"
           eyebrow="Projects"
-          title="Work we can show with confidence."
-          description="Genuine examples from Abel Solutions. More construction and technology case studies will be added as approved photography becomes available."
+          title="Public work you can open today."
+          description="Live technology examples from Abel Solutions — including language learning and programming education sites — with construction photography joining as approved images become available."
         />
         {projects.length > 0 ? (
-          projects.length === 1 ? (
+          <div className="space-y-6">
             <ProjectCard project={projects[0]} featured />
-          ) : (
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          )
+            {projects.length > 1 ? (
+              <div className="grid gap-6 md:grid-cols-2">
+                {projects.slice(1).map((project) => (
+                  <ProjectCard key={project.slug} project={project} />
+                ))}
+              </div>
+            ) : null}
+          </div>
         ) : (
           <EmptyState
             title="Project gallery coming soon"
@@ -161,7 +162,7 @@ export default function HomePage() {
         )}
         <div className="mt-8">
           <Button href="/projects" variant="secondary">
-            View projects
+            View all projects
           </Button>
         </div>
       </Section>
@@ -205,34 +206,30 @@ export default function HomePage() {
 function HeroVisual() {
   return (
     <div className="relative h-full min-h-[240px]">
-      <div className="absolute inset-x-4 top-4 rounded-xl border border-white/20 bg-[#0f2436] p-4 shadow-lg md:inset-x-6 md:top-6">
+      <div className="absolute inset-x-4 top-4 rounded-[var(--radius-lg)] border border-white/20 bg-[var(--color-navy-soft)] p-4 shadow-[var(--shadow-soft)] md:inset-x-6 md:top-6">
         <div className="mb-3 flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-accent)]" />
-          <span className="text-xs tracking-wide text-white/60 uppercase">
-            Technology
-          </span>
+          <span className="type-label text-white/60">Technology</span>
         </div>
         <div className="space-y-2">
-          <div className="h-2.5 w-4/5 rounded bg-white/15" />
-          <div className="h-2.5 w-3/5 rounded bg-white/10" />
+          <div className="h-2.5 w-4/5 rounded-[var(--radius-sm)] bg-white/15" />
+          <div className="h-2.5 w-3/5 rounded-[var(--radius-sm)] bg-white/10" />
           <div className="mt-4 grid grid-cols-3 gap-2">
-            <div className="h-14 rounded-md bg-white/8 border border-white/10" />
-            <div className="h-14 rounded-md bg-white/8 border border-white/10" />
-            <div className="h-14 rounded-md bg-white/8 border border-white/10" />
+            <div className="h-14 rounded-[var(--radius-md)] bg-white/8 border border-white/10" />
+            <div className="h-14 rounded-[var(--radius-md)] bg-white/8 border border-white/10" />
+            <div className="h-14 rounded-[var(--radius-md)] bg-white/8 border border-white/10" />
           </div>
         </div>
       </div>
-      <div className="absolute inset-x-8 bottom-4 rounded-xl border border-white/15 bg-[#1a2a22]/90 p-4 backdrop-blur-sm md:inset-x-10 md:bottom-6">
+      <div className="absolute inset-x-8 bottom-4 rounded-[var(--radius-lg)] border border-white/15 bg-[rgb(26_42_34_/_0.9)] p-4 backdrop-blur-sm md:inset-x-10 md:bottom-6">
         <div className="mb-3 flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-construction)]" />
-          <span className="text-xs tracking-wide text-white/60 uppercase">
-            Construction
-          </span>
+          <span className="type-label text-white/60">Construction</span>
         </div>
         <div className="flex items-end gap-2">
-          <div className="h-16 flex-1 rounded-t-md bg-white/12 border border-white/10" />
-          <div className="h-24 w-20 rounded-md bg-white/10 border border-white/15" />
-          <div className="h-12 flex-1 rounded-t-md bg-white/12 border border-white/10" />
+          <div className="h-16 flex-1 rounded-t-[var(--radius-md)] bg-white/12 border border-white/10" />
+          <div className="h-24 w-20 rounded-[var(--radius-md)] bg-white/10 border border-white/15" />
+          <div className="h-12 flex-1 rounded-t-[var(--radius-md)] bg-white/12 border border-white/10" />
         </div>
       </div>
     </div>

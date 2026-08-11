@@ -1,0 +1,50 @@
+{
+  "campaign": {
+    "name": "Abel Solutions — Dependable Dual-Trade Launch",
+    "positioning": "Premium practical technology and construction support for homes and businesses in London and surrounding areas.",
+    "coreMessage": "Technology and construction solutions you can depend on — clear scope, careful work, honest quotations.",
+    "audiences": [
+      "Homeowners and tenants needing tech or property help",
+      "Landlords and property managers",
+      "Local SMEs needing practical IT support",
+      "Prospective clients evaluating digital delivery via public projects"
+    ],
+    "restrictions": [
+      "Do not invent contact details, reviews, certifications, insurance or PASMA status",
+      "Do not publish residential addresses",
+      "Do not present construction photography as finished case studies beyond approved public assets",
+      "Kwéyòl Dictionary: learning aid with provisional entries; do not claim certified curriculum",
+      "No PASMA training-slide imagery"
+    ],
+    "brand": {
+      "name": "Abel Solutions",
+      "legalName": "Abel Solutions Limited",
+      "colors": {
+        "navy": "#0B1C2C",
+        "accent": "#1F6FAD",
+        "construction": "#8A6A45",
+        "surface": "#F4F6F8",
+        "warm": "#F7F5F2"
+      },
+      "fonts": {
+        "display": "Outfit",
+        "body": "Source Sans 3"
+      },
+      "ctaPrimary": "Request a Quote",
+      "ctaSecondary": "Explore Our Services",
+      "siteUrl": "https://mrlucien-johnson.github.io/AbelSolutions/",
+      "instagram": "@AbelSolutionsLimited"
+    },
+    "publicProjects": [
+      {
+        "name": "Kwéyòl Dictionary",
+        "url": "https://mrlucien-johnson.github.io/KweyolDictionary/"
+      },
+      {
+        "name": "Programming Foundations course",
+        "url": "https://mrlucien-johnson.github.io/programming-foundations-course/"
+      }
+    ]
+  },
+  "videos": []
+}

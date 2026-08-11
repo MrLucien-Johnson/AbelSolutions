@@ -376,29 +376,9 @@ export const whyChoose = [
       "Attention to detail whether the work involves a PC, a media wall or on-site labour.",
   },
   {
-    title: "Tailored solutions",
-    description:
-      "Work scoped around your space, equipment, budget and timescale.",
-  },
-  {
     title: "Honest quotations",
     description:
       "Clear pricing based on what we can see and assess — with no inflated promises.",
-  },
-  {
-    title: "Respect for your property",
-    description:
-      "Care taken with homes, business premises, equipment and finished surfaces.",
-  },
-  {
-    title: "One point of contact",
-    description:
-      "A single company for technology and construction needs, without juggling multiple providers.",
-  },
-  {
-    title: "Homes and businesses",
-    description:
-      "Support for homeowners, tenants, landlords and local companies across London and nearby areas.",
   },
 ];
 

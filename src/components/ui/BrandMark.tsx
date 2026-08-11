@@ -38,14 +38,14 @@ export function BrandMark({
       ) : (
         <span
           className={cn(
-            "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] border",
+            "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] border",
             tone === "light"
               ? "border-white/25 bg-white/10 text-white"
               : "border-[var(--color-border-strong)] bg-[var(--color-accent-soft)] text-[var(--color-navy)]",
           )}
           aria-hidden="true"
         >
-          <span className="font-[family-name:var(--font-outfit)] text-[0.72rem] font-bold tracking-[0.06em]">
+          <span className="font-display text-xs font-bold tracking-[0.06em]">
             AS
           </span>
         </span>
@@ -54,22 +54,19 @@ export function BrandMark({
       <span className="inline-flex flex-col">
         <span
           className={cn(
-            "font-[family-name:var(--font-outfit)] text-[1.02rem] font-bold tracking-[0.12em]",
+            "font-display text-[1.02rem] font-bold tracking-[0.12em]",
             tone === "light" ? "text-white" : "text-[var(--color-navy)]",
           )}
         >
           ABEL&nbsp;SOLUTIONS
         </span>
         <span
-          className={cn(
-            "mt-1.5 h-0.5 w-10 rounded-full",
-            tone === "light" ? "bg-[var(--color-accent)]" : "bg-[var(--color-accent)]",
-          )}
+          className="mt-1.5 h-0.5 w-10 rounded-[var(--radius-sm)] bg-[var(--color-accent)]"
           aria-hidden="true"
         />
         <span
           className={cn(
-            "mt-1.5 text-[0.62rem] font-medium tracking-[0.08em] uppercase",
+            "mt-1.5 text-xs font-medium tracking-[var(--tracking-eyebrow)] uppercase",
             tone === "light" ? "text-white/65" : "text-[var(--color-muted)]",
           )}
         >
@@ -139,7 +136,7 @@ export function PageHero({
         <Breadcrumbs items={breadcrumbs} />
         <div className="max-w-3xl">
           <h1 className="mb-6 text-white">{title}</h1>
-          <p className="text-lg md:text-xl leading-relaxed text-white/80">
+          <p className="text-lg md:text-xl leading-body text-white/80">
             {description}
           </p>
           {children ? <div className="mt-8">{children}</div> : null}

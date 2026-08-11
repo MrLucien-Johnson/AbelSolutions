@@ -32,7 +32,7 @@ export default function AboutPage() {
               title="One company. Two clearly separated service areas."
               description="Abel Solutions Limited brings together technology services and construction support so customers do not have to juggle disconnected providers for everyday practical work."
             />
-            <div className="space-y-5 text-[var(--color-slate)] leading-relaxed max-w-3xl">
+            <div className="space-y-5 text-[var(--color-slate)] leading-body max-w-3xl">
               <p>
                 Technology work covers the problems people hit most often:
                 unreliable computers, upgrades, custom builds, networks, software
@@ -51,7 +51,7 @@ export default function AboutPage() {
             </div>
           </div>
           <aside className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-soft)] p-7 h-fit">
-            <h2 className="mb-4 text-xl">Company details</h2>
+            <h3 className="mb-4">Company details</h3>
             <dl className="space-y-4 text-[var(--color-slate)]">
               <div>
                 <dt className="text-sm text-[var(--color-muted)]">Legal name</dt>

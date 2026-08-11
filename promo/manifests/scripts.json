@@ -1,0 +1,233 @@
+{
+  "hero": {
+    "duration": 55,
+    "cues": [
+      [
+        0.2,
+        3.8,
+        "Two trades. One clear point of contact."
+      ],
+      [
+        3.9,
+        10.5,
+        "Stop juggling separate providers."
+      ],
+      [
+        10.6,
+        20.0,
+        "Technology support and construction services \u2014 together."
+      ],
+      [
+        20.1,
+        28.5,
+        "Clear communication. Careful work. Honest quotations."
+      ],
+      [
+        28.6,
+        38.0,
+        "Public projects you can open today."
+      ],
+      [
+        38.1,
+        46.0,
+        "Kw\u00e9y\u00f2l Dictionary \u00b7 Programming Foundations"
+      ],
+      [
+        46.1,
+        54.0,
+        "Request a quote \u2014 get a clear next step."
+      ]
+    ],
+    "text": "Two trades. One clear point of contact. When technology fails, or a space needs practical construction help, most people end up juggling separate providers. Abel Solutions brings technology support and construction services together \u2014 with clear communication, careful workmanship, and honest quotations. Explore public digital projects you can open today, including the Kw\u00e9y\u00f2l Dictionary and Programming Foundations course. Then request a quote \u2014 and get a clear next step.",
+    "voice": "en-GB-LibbyNeural",
+    "music": "study-concentration-lofi"
+  },
+  "short": {
+    "duration": 29,
+    "cues": [
+      [
+        0.2,
+        4.0,
+        "Tech + construction, without the runaround."
+      ],
+      [
+        4.1,
+        12.0,
+        "Repairs \u00b7 Custom PCs \u00b7 Media walls \u00b7 Site support"
+      ],
+      [
+        12.1,
+        20.0,
+        "Live public projects you can open today."
+      ],
+      [
+        20.1,
+        28.0,
+        "Request a clear quote."
+      ]
+    ],
+    "text": "Abel Solutions \u2014 technology and construction without the runaround. Repairs, custom PCs, media walls and site support for homes and businesses. See live public projects, then request a clear quote.",
+    "voice": "en-GB-LibbyNeural",
+    "music": "study-concentration-lofi"
+  },
+  "social15": {
+    "duration": 15,
+    "cues": [
+      [
+        0.1,
+        2.8,
+        "Stop juggling providers."
+      ],
+      [
+        2.9,
+        8.5,
+        "Tech and construction. One company."
+      ],
+      [
+        8.6,
+        14.2,
+        "Request a quote today."
+      ]
+    ],
+    "text": "Stop juggling providers. Abel Solutions \u2014 technology and construction under one trusted company. Request a quote today.",
+    "voice": "en-GB-LibbyNeural",
+    "music": "study-concentration-lofi"
+  },
+  "micro": {
+    "duration": 8.5,
+    "cues": [
+      [
+        0.1,
+        2.2,
+        "Abel Solutions"
+      ],
+      [
+        2.3,
+        5.2,
+        "Technology + Construction"
+      ],
+      [
+        5.3,
+        8.0,
+        "Request a clear quote"
+      ]
+    ],
+    "text": "Abel Solutions. Technology and construction. Request a clear quote.",
+    "voice": "en-GB-LibbyNeural",
+    "music": "study-concentration-lofi"
+  },
+  "explainer": {
+    "duration": 72,
+    "cues": [
+      [
+        0.2,
+        6.0,
+        "A practical dual-trade company."
+      ],
+      [
+        6.1,
+        16.0,
+        "Technology: repairs, PCs, networks, business IT."
+      ],
+      [
+        16.1,
+        28.0,
+        "Construction: media walls, mounting, fitting, labour."
+      ],
+      [
+        28.1,
+        40.0,
+        "Public projects: Kw\u00e9y\u00f2l Dictionary \u00b7 Programming Foundations."
+      ],
+      [
+        40.1,
+        52.0,
+        "Tell us what you need \u2192 assessment \u2192 clear quotation."
+      ],
+      [
+        52.1,
+        62.0,
+        "No invented certifications, reviews or results."
+      ],
+      [
+        62.1,
+        71.0,
+        "Request a quote on the website."
+      ]
+    ],
+    "text": "Abel Solutions Limited is a practical dual-trade company for homes and businesses across London and surrounding areas. Technology services cover computer repairs, upgrades, custom PC builds, networks and small-business IT support. Construction services include media walls, TV mounting, shelving, stud walls and labour support \u2014 assessed carefully for scope and safety. You can also review genuine public digital work, including the Kw\u00e9y\u00f2l Dictionary and Programming Foundations course. The process is straightforward: tell us what you need, receive an assessment, get a clear quotation, then arrange the work. We do not invent certifications, reviews or results. Request a quote on the website to get started.",
+    "voice": "en-GB-LibbyNeural",
+    "music": "study-concentration-lofi"
+  },
+  "features": {
+    "duration": 46,
+    "cues": [
+      [
+        0.2,
+        3.5,
+        "What you can use today."
+      ],
+      [
+        3.6,
+        11.0,
+        "Technology support with clear diagnosis."
+      ],
+      [
+        11.1,
+        18.5,
+        "Custom PC builds, scoped carefully."
+      ],
+      [
+        18.6,
+        26.5,
+        "Media walls and mounting, planned properly."
+      ],
+      [
+        26.6,
+        37.0,
+        "Live digital projects you can open."
+      ],
+      [
+        37.1,
+        45.0,
+        "Request a quote to discuss a similar brief."
+      ]
+    ],
+    "text": "Here is what you can actually use today. Technology support with clear diagnosis before quoting. Custom PC builds scoped to budget and workload. Media walls and mounting planned around your room. And live digital projects \u2014 the Kw\u00e9y\u00f2l Dictionary and Programming Foundations \u2014 that show how Abel Solutions delivers. Discuss a similar brief by requesting a quote.",
+    "voice": "en-GB-LibbyNeural",
+    "music": "study-concentration-lofi"
+  },
+  "brand": {
+    "duration": 30,
+    "cues": [
+      [
+        0.3,
+        3.5,
+        "Abel Solutions"
+      ],
+      [
+        5.0,
+        10.0,
+        "Dependable technology."
+      ],
+      [
+        11.0,
+        16.0,
+        "Careful construction."
+      ],
+      [
+        17.0,
+        22.0,
+        "Public work you can open."
+      ],
+      [
+        23.0,
+        29.0,
+        "Solutions you can depend on."
+      ]
+    ],
+    "text": "Abel Solutions. Dependable technology. Careful construction. Public work you can open. Technology and construction solutions you can depend on.",
+    "voice": "en-GB-LibbyNeural",
+    "music": "study-concentration-lofi"
+  }
+}

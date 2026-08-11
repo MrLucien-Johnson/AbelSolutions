@@ -18,12 +18,14 @@ export function Section({
   id,
   ariaLabelledby,
   tone = "default",
+  compact = false,
 }: {
   children: React.ReactNode;
   className?: string;
   id?: string;
   ariaLabelledby?: string;
   tone?: "default" | "soft" | "warm" | "navy" | "white";
+  compact?: boolean;
 }) {
   const tones = {
     default: "bg-[var(--color-surface-soft)]",
@@ -37,7 +39,11 @@ export function Section({
     <section
       id={id}
       aria-labelledby={ariaLabelledby}
-      className={cn("section-space", tones[tone], className)}
+      className={cn(
+        compact ? "section-space-compact" : "section-space",
+        tones[tone],
+        className,
+      )}
     >
       <Container>{children}</Container>
     </section>
@@ -69,7 +75,7 @@ export function SectionHeading({
       {eyebrow ? (
         <p
           className={cn(
-            "mb-4 text-sm font-semibold tracking-[0.08em] uppercase",
+            "type-eyebrow mb-4",
             tone === "light" ? "text-white/70" : "text-[var(--color-accent)]",
           )}
         >
@@ -88,7 +94,7 @@ export function SectionHeading({
       {description ? (
         <p
           className={cn(
-            "text-lg leading-relaxed",
+            "text-lg leading-body",
             tone === "light" ? "text-white/80" : "text-[var(--color-slate)]",
             align === "center" && "mx-auto",
           )}

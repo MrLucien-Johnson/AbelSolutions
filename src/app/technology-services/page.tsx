@@ -45,8 +45,8 @@ export default function TechnologyServicesPage() {
             />
           </div>
           <aside className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-accent-soft)] p-6 md:p-7">
-            <h2 className="mb-3 text-xl">Good to know</h2>
-            <ul className="space-y-3 text-[var(--color-slate)]">
+            <h3 className="mb-3">Good to know</h3>
+            <ul className="space-y-3 text-[var(--color-slate)] leading-body">
               <li>We do not claim certifications or partnerships unless documented.</li>
               <li>Software licences are not included with builds unless agreed separately.</li>
               <li>Some faults need diagnosis before a firm quotation can be given.</li>
@@ -61,7 +61,8 @@ export default function TechnologyServicesPage() {
           id={category.id}
           tone="soft"
           ariaLabelledby={`${category.id}-heading`}
-          className="!py-16 md:!py-20 border-t border-[var(--color-border)]"
+          compact
+          className="border-t border-[var(--color-border)]"
         >
           <SectionHeading
             id={`${category.id}-heading`}
@@ -74,8 +75,8 @@ export default function TechnologyServicesPage() {
                 key={item.title}
                 className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
               >
-                <h3 className="mb-3 text-lg">{item.title}</h3>
-                <p className="text-[var(--color-slate)] leading-relaxed">
+                <h3 className="mb-3">{item.title}</h3>
+                <p className="text-[var(--color-slate)] leading-body">
                   {item.description}
                 </p>
               </article>
