@@ -177,18 +177,18 @@ ${assBody}
       "-i", silent,
       "-stream_loop", "-1", "-i", music,
       "-filter_complex",
-      `[0:v]ass=${ass}[v];[1:a]volume=0.55,afade=t=in:st=0:d=0.4,afade=t=out:st=${Math.max(seconds - 1.2, 0)}:d=1.1,atrim=0:${seconds},loudnorm=I=-16:TP=-1.5:LRA=11[a]`,
+      `[0:v]ass=${ass}[v];[1:a]volume=0.72,afade=t=in:st=0:d=0.4,afade=t=out:st=${Math.max(seconds - 1.2, 0)}:d=1.1,atrim=0:${seconds},loudnorm=I=-16:TP=-1.5:LRA=11,aformat=sample_rates=48000:channel_layouts=stereo[a]`,
       "-map", "[v]", "-map", "[a]",
       "-t", String(seconds),
       "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
-      "-c:a", "aac", "-b:a", "192k",
+      "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
       "-movflags", "+faststart",
       out,
     ]);
     return;
   }
 
-  // Prefer ducked mix; fall back to amix if sidechain unavailable
+  // Mux warm VO + study bed; duck music under speech, keep bed audible between phrases
   const ducked = [
     "ffmpeg", "-y",
     "-i", silent,
@@ -196,13 +196,14 @@ ${assBody}
     "-stream_loop", "-1", "-i", music,
     "-filter_complex",
     `[0:v]ass=${ass}[v];` +
-      `[1:a]loudnorm=I=-14:TP=-1.5:LRA=11,afade=t=in:st=0:d=0.1[vo];` +
-      `[2:a]volume=0.4[mus];` +
-      `[mus][vo]sidechaincompress=threshold=0.05:ratio=8:attack=40:release=350:makeup=1.1,atrim=0:${seconds},loudnorm=I=-15:TP=-1.5:LRA=11[a]`,
+      `[1:a]aformat=sample_rates=48000:channel_layouts=stereo,loudnorm=I=-14:TP=-1.5:LRA=9,afade=t=in:st=0:d=0.08,volume=1.12,asplit=2[vo][vo2];` +
+      `[2:a]aformat=sample_rates=48000:channel_layouts=stereo,volume=0.5[mus];` +
+      `[mus][vo]sidechaincompress=threshold=0.04:ratio=7:attack=25:release=420:makeup=1.05[ducked];` +
+      `[ducked][vo2]amix=inputs=2:duration=first:dropout_transition=0,atrim=0:${seconds},loudnorm=I=-15:TP=-1.5:LRA=11,aformat=sample_rates=48000:channel_layouts=stereo[a]`,
     "-map", "[v]", "-map", "[a]",
     "-t", String(seconds),
     "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
-    "-c:a", "aac", "-b:a", "192k",
+    "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
     "-movflags", "+faststart",
     out,
   ];
@@ -213,13 +214,13 @@ ${assBody}
     "-stream_loop", "-1", "-i", music,
     "-filter_complex",
     `[0:v]ass=${ass}[v];` +
-      `[1:a]loudnorm=I=-14:TP=-1.5:LRA=11[vo];` +
-      `[2:a]volume=0.28[mus];` +
-      `[mus][vo]amix=inputs=2:duration=first:dropout_transition=2,atrim=0:${seconds},loudnorm=I=-15:TP=-1.5:LRA=11[a]`,
+      `[1:a]aformat=sample_rates=48000:channel_layouts=stereo,loudnorm=I=-14:TP=-1.5:LRA=9,volume=1.15[vo];` +
+      `[2:a]aformat=sample_rates=48000:channel_layouts=stereo,volume=0.3[mus];` +
+      `[mus][vo]amix=inputs=2:duration=first:dropout_transition=2,atrim=0:${seconds},loudnorm=I=-15:TP=-1.5:LRA=11,aformat=sample_rates=48000:channel_layouts=stereo[a]`,
     "-map", "[v]", "-map", "[a]",
     "-t", String(seconds),
     "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
-    "-c:a", "aac", "-b:a", "192k",
+    "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
     "-movflags", "+faststart",
     out,
   ];
@@ -232,21 +233,35 @@ function makeThumbnail(video, outJpg) {
 }
 
 async function main() {
+  const remuxOnly = process.argv.includes("--remux-only");
   fs.mkdirSync(path.join(RENDERS, "16x9"), { recursive: true });
   fs.mkdirSync(path.join(RENDERS, "9x16"), { recursive: true });
   fs.mkdirSync(path.join(RENDERS, "1x1"), { recursive: true });
   fs.mkdirSync(path.join(ROOT, "thumbnails"), { recursive: true });
   fs.mkdirSync(TMP, { recursive: true });
 
-  const { server, port } = await startStaticServer(ROOT);
+  let server = null;
+  let port = 0;
+  if (!remuxOnly) {
+    ({ server, port } = await startStaticServer(ROOT));
+  }
   const manifestVideos = [];
   const validation = [];
 
   try {
     for (const item of CATALOGUE) {
       for (const ratio of item.ratios) {
-        console.log(`\n=== Rendering ${item.id} @ ${ratio} ===`);
-        const silent = await recordComposition(port, item.set, ratio, item.seconds);
+        console.log(`\n=== ${remuxOnly ? "Remuxing" : "Rendering"} ${item.id} @ ${ratio} ===`);
+        const cachedSilent = path.join(TMP, `${item.set}-${ratio}-silent.mp4`);
+        let silent;
+        if (remuxOnly) {
+          if (!fs.existsSync(cachedSilent)) {
+            throw new Error(`Missing cached silent video for remux: ${cachedSilent}`);
+          }
+          silent = cachedSilent;
+        } else {
+          silent = await recordComposition(port, item.set, ratio, item.seconds);
+        }
         const outDir = path.join(RENDERS, ratio);
         const out = path.join(outDir, `${item.id}-${ratio}.mp4`);
         const vo = item.vo ? path.join(ROOT, "audio", "voice", `${item.vo}.mp3`) : null;
@@ -299,7 +314,7 @@ async function main() {
       }
     }
   } finally {
-    server.close();
+    if (server) server.close();
   }
 
   const report = {

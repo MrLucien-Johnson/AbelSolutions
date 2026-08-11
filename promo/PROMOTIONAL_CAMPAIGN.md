@@ -40,10 +40,10 @@ Validation: `promo/qa/validation-report.json`
 
 ## Audio approach
 
-- **Voice:** Microsoft Edge neural TTS `en-GB-SoniaNeural` (free/local CLI via `edge-tts`)
-- **Music:** Original multi-layer instrumental beds generated with FFmpeg (licence-safe, no copyrighted commercial tracks)
+- **Voice:** Warm British neural VO `en-GB-LibbyNeural` via `edge-tts` (sentence-paced with short breath gaps, slightly slower rate / lower pitch for a human, friendly tone). Closest free/local option to hired human VO; drop replacement files into `promo/audio/voice/` to swap.
+- **Music:** Original fun learning / concentration lo-fi beds (88 BPM soft groove, warm chords, light melody) generated locally with NumPy + FFmpeg — licence-safe, no copyrighted commercial tracks
 - **Captions:** `.srt` + `.vtt` in `promo/subtitles/`, burned into MP4s
-- **Mix:** loudnorm + music ducking under VO
+- **Mix:** VO + study bed muxed with sidechain ducking under speech, loudnorm for web/social
 
 ## Technical implementation
 

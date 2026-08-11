@@ -17,11 +17,14 @@ Regenerate the campaign after site or script changes.
 # 1) Capture public UI (Abel Solutions + public project sites)
 node promo/scripts/capture-ui.mjs
 
-# 2) Generate instrumental beds, British VO, SRT/VTT
+# 2) Generate study/concentration beds + warm British VO + SRT/VTT
 python3 promo/scripts/generate-audio.py
 
 # 3) Render all MP4 compositions + validate
 node promo/scripts/render-campaign.mjs
+
+# Or remux new audio onto cached silent videos (faster):
+node promo/scripts/render-campaign.mjs --remux-only
 ```
 
 One-shot:
@@ -30,17 +33,19 @@ One-shot:
 bash promo/scripts/render-all.sh
 ```
 
+Audio notes: VO uses warm `en-GB-LibbyNeural` (sentence-paced). Music is an original fun learning / concentration lo-fi bed. Final MP4s mux VO + music with ducking.
+
 ## Edit scripts / scenes
 
 - Narration + caption cues: `promo/scripts/generate-audio.py` (`SCRIPTS`)
 - Scene timelines / on-screen copy: `promo/compositions/player.html` (`SETS`)
 - Output catalogue / ratios: `promo/scripts/render-campaign.mjs` (`CATALOGUE`)
 
-## Replace voice with human VO
+## Replace voice with recorded human VO
 
-1. Export WAV/MP3 named like `promo/audio/voice/hero.mp3`
+1. Export WAV/MP4/MP3 named like `promo/audio/voice/hero.mp3`
 2. Keep timing close to existing cue sheet in `promo/subtitles/hero.srt`
-3. Re-run `node promo/scripts/render-campaign.mjs`
+3. Re-run `npm run promo:remux` (or full `promo:render`)
 
 ## Outputs
 

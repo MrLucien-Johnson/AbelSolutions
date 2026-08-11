@@ -18,6 +18,7 @@
     "promo:capture": "node promo/scripts/capture-ui.mjs",
     "promo:audio": "python3 promo/scripts/generate-audio.py",
     "promo:render": "node promo/scripts/render-campaign.mjs",
+    "promo:remux": "node promo/scripts/render-campaign.mjs --remux-only",
     "promo:all": "bash promo/scripts/render-all.sh"
   },
   "dependencies": {
