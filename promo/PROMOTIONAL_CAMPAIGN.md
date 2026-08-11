@@ -55,8 +55,8 @@ Validation: `promo/qa/validation-report.json`
 
 ## Limitations
 
-- Music is original ambient synthesis, not a full studio score
-- Voice is high-quality neural TTS, not a hired human VO artist
+- Music is an original study/concentration lo-fi bed (not a licensed commercial track or full studio score)
+- Voice is warm British neural TTS (`en-GB-LibbyNeural`), not a hired human VO artist — replaceable via `promo/audio/voice/`
 - Some GitHub Pages captures reflect the currently deployed site (may lag unmerged feature branches)
 - Device-frame UI quality depends on capture sharpness of public pages
 
