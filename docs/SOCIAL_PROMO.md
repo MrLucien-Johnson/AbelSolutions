@@ -1,11 +1,25 @@
 # Social promo pack — Abel Solutions
 
-Still frames for Instagram, Snapchat Stories and Reel covers live in:
+## Motion videos (MP4)
+
+Ready-to-upload vertical videos with British voiceover, instrumental bed, and burned-in subtitles:
+
+**Folder:** `public/marketing/videos/`
+
+| File | Topic |
+| --- | --- |
+| `01-tech-services.mp4` | Technology services |
+| `02-construction-services.mp4` | Construction services |
+| `03-kweyol-dictionary.mp4` | Kwéyòl Dictionary project |
+| `04-dual-services.mp4` | Dual-division brand |
+| `05-request-quote.mp4` | Quote CTA |
+
+Rebuild locally with: `python3 scripts/build-promo-videos.py`
+
+## Still frames
 
 - `public/marketing/instagram/`
 - `public/marketing/reels/`
-
-These are **ready-to-post stills and cover frames**. Full motion Reels need CapCut, Instagram, or similar — use the shot lists below.
 
 ## Files
 
