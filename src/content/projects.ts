@@ -95,6 +95,36 @@ const placeholderProjects: Project[] = [
  */
 const liveProjects: Project[] = [
   {
+    slug: "kweyol-dictionary",
+    title: "Kwéyòl Dictionary",
+    category: "technology",
+    summary:
+      "A public Dominican Kwéyòl–English dictionary and learning site built to help people learn, preserve and celebrate the Kwéyòl language of Dominica.",
+    location: "Online",
+    services: [
+      "Web application design",
+      "Language learning content structure",
+      "Static GitHub Pages deployment",
+      "Searchable dictionary experience",
+    ],
+    challenge:
+      "Present a respectful, beginner-friendly dictionary experience for Dominican Kwéyòl without overstating certification claims or presenting unfinished content as final.",
+    solution:
+      "Built a public learning site with searchable entries, clear language policy notes, and a content disclaimer so learners understand what is provisional and open to community correction.",
+    outcome:
+      "A live public dictionary site clients can open today — a concrete example of Abel Solutions technology, content structure and careful product presentation.",
+    images: [
+      {
+        src: "/images/projects/kweyol-dictionary.svg",
+        alt: "Cover graphic for the Dominican Kwéyòl–English dictionary learning site",
+      },
+    ],
+    isPlaceholder: false,
+    status: "live",
+    externalUrl: "https://mrlucien-johnson.github.io/KweyolDictionary/",
+    ctaLabel: "View the dictionary website",
+  },
+  {
     slug: "programming-foundations-course",
     title: "Programming Foundations course",
     category: "technology",

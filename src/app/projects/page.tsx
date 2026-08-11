@@ -14,7 +14,7 @@ import { createPageMetadata } from "@/lib/metadata";
 export const metadata = createPageMetadata({
   title: "Projects",
   description:
-    "Browse Abel Solutions project examples, including technology work such as the Programming Foundations course website, plus construction case studies and future project photography as it becomes available.",
+    "Browse Abel Solutions project examples, including the Kwéyòl Dictionary and Programming Foundations course websites, plus construction photography as it becomes available.",
   path: "/projects",
 });
 
@@ -35,7 +35,7 @@ export default function ProjectsPage() {
       <BreadcrumbJsonLd items={[{ name: "Projects", path: "/projects" }]} />
       <PageHero
         title="Projects and previous work"
-        description="Selected work from Abel Solutions. We publish genuine examples only — no invented reviews, dates or before-and-after claims."
+        description="Selected public work from Abel Solutions. We publish genuine examples only — no invented reviews, dates or before-and-after claims."
         breadcrumbs={[{ label: "Projects" }]}
       />
 
@@ -44,8 +44,8 @@ export default function ProjectsPage() {
           <SectionHeading
             id="featured-project"
             eyebrow="Featured"
-            title="A clear example of our technology work."
-            description="This live course website shows how Abel Solutions can structure practical digital resources for learners and clients."
+            title="Public technology work you can open today."
+            description="Live websites that show how Abel Solutions structures practical digital products for learners and communities."
           />
           <ProjectCard project={featured} featured />
         </Section>
@@ -57,17 +57,17 @@ export default function ProjectsPage() {
       >
         <SectionHeading
           id="projects-list"
-          eyebrow="Gallery"
-          title={liveCount > 0 ? "Selected work" : "Project entries will appear here"}
+          eyebrow="Live examples"
+          title={liveCount > 1 ? "More published work" : liveCount > 0 ? "Selected work" : "Project entries will appear here"}
           description={
             liveCount > 0
-              ? "Browse published examples across technology and construction. More case studies will be added as approved photography becomes available."
+              ? "Open the live sites to see structure, clarity and delivery style. Construction case studies will join the gallery as approved photography becomes available."
               : "When approved project images and summaries are ready, they will be added through the content files documented in the project guide."
           }
         />
 
         {remaining.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2">
             {remaining.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
@@ -78,7 +78,7 @@ export default function ProjectsPage() {
             description="This section is ready for genuine case studies. Development placeholders can be enabled locally with NEXT_PUBLIC_SHOW_PLACEHOLDER_PROJECTS=true."
           />
         ) : (
-          <p className="text-[var(--color-slate)]">
+          <p className="text-[var(--color-slate)] leading-body">
             More project examples will appear here as construction and technology
             case studies are approved for publication.
           </p>

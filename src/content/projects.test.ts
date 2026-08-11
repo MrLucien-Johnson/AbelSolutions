@@ -7,14 +7,21 @@ import {
 } from "@/content/projects";
 
 describe("projects content", () => {
-  it("includes the live Programming Foundations course", () => {
-    expect(getLiveProjectCount()).toBeGreaterThanOrEqual(1);
+  it("features the live Kwéyòl Dictionary and includes the programming course", () => {
+    expect(getLiveProjectCount()).toBeGreaterThanOrEqual(2);
 
-    const featured = getFeaturedProjects(1)[0];
-    expect(featured?.slug).toBe("programming-foundations-course");
-    expect(featured?.isPlaceholder).toBe(false);
-    expect(featured?.status).toBe("live");
-    expect(featured?.externalUrl).toContain("programming-foundations-course");
+    const featured = getFeaturedProjects(2);
+    expect(featured[0]?.slug).toBe("kweyol-dictionary");
+    expect(featured[0]?.externalUrl).toContain("KweyolDictionary");
+    expect(featured.some((project) => project.slug === "programming-foundations-course")).toBe(
+      true,
+    );
+
+    for (const project of featured) {
+      expect(project.isPlaceholder).toBe(false);
+      expect(project.status).toBe("live");
+      expect(project.externalUrl).toBeTruthy();
+    }
   });
 
   it("lists mobile access tower work under future projects", () => {

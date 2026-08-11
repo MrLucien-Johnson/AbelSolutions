@@ -140,19 +140,20 @@ export default function HomePage() {
         <SectionHeading
           id="projects-heading"
           eyebrow="Projects"
-          title="Work we can show with confidence."
-          description="Genuine examples from Abel Solutions. More construction and technology case studies will be added as approved photography becomes available."
+          title="Public work you can open today."
+          description="Live technology examples from Abel Solutions — including language learning and programming education sites — with construction photography joining as approved images become available."
         />
         {projects.length > 0 ? (
-          projects.length === 1 ? (
+          <div className="space-y-6">
             <ProjectCard project={projects[0]} featured />
-          ) : (
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          )
+            {projects.length > 1 ? (
+              <div className="grid gap-6 md:grid-cols-2">
+                {projects.slice(1).map((project) => (
+                  <ProjectCard key={project.slug} project={project} />
+                ))}
+              </div>
+            ) : null}
+          </div>
         ) : (
           <EmptyState
             title="Project gallery coming soon"
@@ -161,7 +162,7 @@ export default function HomePage() {
         )}
         <div className="mt-8">
           <Button href="/projects" variant="secondary">
-            View projects
+            View all projects
           </Button>
         </div>
       </Section>
