@@ -1,0 +1,345 @@
+{
+  "generatedAt": "2026-08-11T10:52:37.269Z",
+  "videos": [
+    {
+      "id": "promo-hero-55s-16x9",
+      "title": "promo-hero-55s",
+      "set": "hero",
+      "duration": 55,
+      "aspectRatio": "16x9",
+      "resolution": {
+        "width": 1920,
+        "height": 1080
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/16x9/promo-hero-55s-16x9.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-hero-55s-9x16",
+      "title": "promo-hero-55s",
+      "set": "hero",
+      "duration": 55,
+      "aspectRatio": "9x16",
+      "resolution": {
+        "width": 1080,
+        "height": 1920
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/9x16/promo-hero-55s-9x16.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-short-29s-16x9",
+      "title": "promo-short-29s",
+      "set": "short",
+      "duration": 29,
+      "aspectRatio": "16x9",
+      "resolution": {
+        "width": 1920,
+        "height": 1080
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/16x9/promo-short-29s-16x9.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-short-29s-9x16",
+      "title": "promo-short-29s",
+      "set": "short",
+      "duration": 29,
+      "aspectRatio": "9x16",
+      "resolution": {
+        "width": 1080,
+        "height": 1920
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/9x16/promo-short-29s-9x16.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-social-15s-9x16",
+      "title": "promo-social-15s",
+      "set": "social15",
+      "duration": 15,
+      "aspectRatio": "9x16",
+      "resolution": {
+        "width": 1080,
+        "height": 1920
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/9x16/promo-social-15s-9x16.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-social-15s-1x1",
+      "title": "promo-social-15s",
+      "set": "social15",
+      "duration": 15,
+      "aspectRatio": "1x1",
+      "resolution": {
+        "width": 1080,
+        "height": 1080
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/1x1/promo-social-15s-1x1.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-micro-8s-9x16",
+      "title": "promo-micro-8s",
+      "set": "micro",
+      "duration": 8.5,
+      "aspectRatio": "9x16",
+      "resolution": {
+        "width": 1080,
+        "height": 1920
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/9x16/promo-micro-8s-9x16.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-explainer-72s-16x9",
+      "title": "promo-explainer-72s",
+      "set": "explainer",
+      "duration": 72,
+      "aspectRatio": "16x9",
+      "resolution": {
+        "width": 1920,
+        "height": 1080
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/16x9/promo-explainer-72s-16x9.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-features-46s-16x9",
+      "title": "promo-features-46s",
+      "set": "features",
+      "duration": 46,
+      "aspectRatio": "16x9",
+      "resolution": {
+        "width": 1920,
+        "height": 1080
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/16x9/promo-features-46s-16x9.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-features-46s-9x16",
+      "title": "promo-features-46s",
+      "set": "features",
+      "duration": 46,
+      "aspectRatio": "9x16",
+      "resolution": {
+        "width": 1080,
+        "height": 1920
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/9x16/promo-features-46s-9x16.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-brand-film-30s-16x9",
+      "title": "promo-brand-film-30s",
+      "set": "brand",
+      "duration": 30,
+      "aspectRatio": "16x9",
+      "resolution": {
+        "width": 1920,
+        "height": 1080
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/16x9/promo-brand-film-30s-16x9.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-brand-film-30s-9x16",
+      "title": "promo-brand-film-30s",
+      "set": "brand",
+      "duration": 30,
+      "aspectRatio": "9x16",
+      "resolution": {
+        "width": 1080,
+        "height": 1920
+      },
+      "voiceOver": true,
+      "music": true,
+      "captions": true,
+      "output": "renders/9x16/promo-brand-film-30s-9x16.mp4",
+      "renderStatus": "rendered"
+    },
+    {
+      "id": "promo-autoplay-muted-20s-16x9",
+      "title": "promo-autoplay-muted-20s",
+      "set": "autoplay",
+      "duration": 20,
+      "aspectRatio": "16x9",
+      "resolution": {
+        "width": 1920,
+        "height": 1080
+      },
+      "voiceOver": false,
+      "music": true,
+      "captions": true,
+      "output": "renders/16x9/promo-autoplay-muted-20s-16x9.mp4",
+      "renderStatus": "rendered"
+    }
+  ],
+  "validation": [
+    {
+      "file": "/workspace/promo/renders/16x9/promo-hero-55s-16x9.mp4",
+      "ok": true,
+      "duration": 55,
+      "size": 3229425,
+      "width": 1920,
+      "height": 1080,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/9x16/promo-hero-55s-9x16.mp4",
+      "ok": true,
+      "duration": 55,
+      "size": 3034094,
+      "width": 1080,
+      "height": 1920,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/16x9/promo-short-29s-16x9.mp4",
+      "ok": true,
+      "duration": 29,
+      "size": 1827572,
+      "width": 1920,
+      "height": 1080,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/9x16/promo-short-29s-9x16.mp4",
+      "ok": true,
+      "duration": 29,
+      "size": 1709353,
+      "width": 1080,
+      "height": 1920,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/9x16/promo-social-15s-9x16.mp4",
+      "ok": true,
+      "duration": 15,
+      "size": 852113,
+      "width": 1080,
+      "height": 1920,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/1x1/promo-social-15s-1x1.mp4",
+      "ok": true,
+      "duration": 15,
+      "size": 734314,
+      "width": 1080,
+      "height": 1080,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/9x16/promo-micro-8s-9x16.mp4",
+      "ok": true,
+      "duration": 8.5,
+      "size": 548674,
+      "width": 1080,
+      "height": 1920,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/16x9/promo-explainer-72s-16x9.mp4",
+      "ok": true,
+      "duration": 72,
+      "size": 4254133,
+      "width": 1920,
+      "height": 1080,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/16x9/promo-features-46s-16x9.mp4",
+      "ok": true,
+      "duration": 46,
+      "size": 2934320,
+      "width": 1920,
+      "height": 1080,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/9x16/promo-features-46s-9x16.mp4",
+      "ok": true,
+      "duration": 46,
+      "size": 2465435,
+      "width": 1080,
+      "height": 1920,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/16x9/promo-brand-film-30s-16x9.mp4",
+      "ok": true,
+      "duration": 30,
+      "size": 1278823,
+      "width": 1920,
+      "height": 1080,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/9x16/promo-brand-film-30s-9x16.mp4",
+      "ok": true,
+      "duration": 30,
+      "size": 1177626,
+      "width": 1080,
+      "height": 1920,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    {
+      "file": "/workspace/promo/renders/16x9/promo-autoplay-muted-20s-16x9.mp4",
+      "ok": true,
+      "duration": 20,
+      "size": 1439422,
+      "width": 1920,
+      "height": 1080,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    }
+  ]
+}
