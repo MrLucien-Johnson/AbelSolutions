@@ -17,7 +17,10 @@ Or:
 bash promo/scripts/render-all.sh
 ```
 
-Outputs: `promo/renders/{16x9,9x16,1x1}/*.mp4`
+Outputs: `promo/renders/{16x9,9x16,1x1}/*.mp4`  
+Also copied to: `public/marketing/videos/` for easy download from GitHub.
+
+**Download the finished MP4s:** see [`DOWNLOADS.md`](./DOWNLOADS.md) and [`public/marketing/videos/README.md`](../public/marketing/videos/README.md).
 
 ## What this campaign promotes
 
