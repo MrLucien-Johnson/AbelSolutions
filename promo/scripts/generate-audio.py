@@ -183,25 +183,28 @@ def env_exp(n: int, attack: float, release: float) -> np.ndarray:
 
 
 def soft_kick(n: int) -> np.ndarray:
+    """Warm kick — no sharp click (hearing-safer)."""
     t = np.arange(n) / SAMPLE_RATE
-    freq = 140 * np.exp(-18 * t) + 45
-    body = np.sin(2 * np.pi * freq * t) * env_exp(n, 0.002, n / SAMPLE_RATE * 0.9)
-    click = np.sin(2 * np.pi * 1800 * t) * env_exp(n, 0.0005, 0.012) * 0.25
-    return (body * 0.9 + click) * 0.55
+    freq = 120 * np.exp(-16 * t) + 42
+    body = np.sin(2 * np.pi * freq * t) * env_exp(n, 0.003, n / SAMPLE_RATE * 0.9)
+    return body * 0.42
 
 
 def soft_snare(n: int) -> np.ndarray:
+    """Soft brushed snare — limited treble."""
     t = np.arange(n) / SAMPLE_RATE
-    noise = np.random.default_rng(7).normal(0, 1, n) * env_exp(n, 0.001, 0.12)
-    tone = np.sin(2 * np.pi * 180 * t) * env_exp(n, 0.001, 0.08) * 0.35
-    return (noise * 0.55 + tone) * 0.28
+    noise = np.random.default_rng(7).normal(0, 1, n) * env_exp(n, 0.002, 0.14)
+    # gentle lowpass of noise (moving average) to avoid harsh hiss
+    noise = np.convolve(noise, np.ones(48) / 48, mode="same")
+    tone = np.sin(2 * np.pi * 170 * t) * env_exp(n, 0.002, 0.1) * 0.28
+    return (noise * 0.28 + tone) * 0.16
 
 
 def soft_hat(n: int) -> np.ndarray:
+    """Very soft mid hat — no piercing highs."""
     noise = np.random.default_rng(3).normal(0, 1, n)
-    # crude highpass
-    hat = np.diff(noise, prepend=noise[0])
-    return hat * env_exp(n, 0.0005, 0.04) * 0.12
+    hat = np.convolve(noise, np.ones(64) / 64, mode="same")
+    return hat * env_exp(n, 0.001, 0.05) * 0.035
 
 
 def chord_tone(freq: float, n: int, vibrato: float = 0.0) -> np.ndarray:
@@ -253,7 +256,8 @@ def make_study_bed(seconds: float, seed: int = 11) -> tuple[np.ndarray, np.ndarr
             note_n = int(0.28 * SAMPLE_RATE)
             if start + note_n > n:
                 break
-            pluck = chord_tone(f * 2, note_n) * env_exp(note_n, 0.005, 0.22) * 0.11
+            # Keep arpeggios in a lower octave so they don't fight speech
+            pluck = chord_tone(f * 1.0, note_n) * env_exp(note_n, 0.008, 0.24) * 0.055
             left[start : start + note_n] += pluck * (0.9 if step % 2 == 0 else 0.7)
             right[start : start + note_n] += pluck * (0.7 if step % 2 == 0 else 0.95)
         pos = end
@@ -274,39 +278,38 @@ def make_study_bed(seconds: float, seed: int = 11) -> tuple[np.ndarray, np.ndarr
             end = min(n, i + len(s))
             left[i:end] += s[: end - i] * 0.9
             right[i:end] += s[: end - i]
-        # hats
-        for h in (0.0, 0.5):
-            hi = int((t + h * beat) * SAMPLE_RATE)
-            hat = soft_hat(int(0.05 * SAMPLE_RATE))
+        # Soft mid hats on quarters only (not every 8th — less fatigue)
+        if beat_i % 2 == 0:
+            hi = int(t * SAMPLE_RATE)
+            hat = soft_hat(int(0.06 * SAMPLE_RATE))
             end = min(n, hi + len(hat))
             if hi < n:
-                pan = 0.7 + 0.2 * ((beat_i + int(h * 2)) % 2)
-                left[hi:end] += hat[: end - hi] * (1.2 - pan)
-                right[hi:end] += hat[: end - hi] * pan
+                left[hi:end] += hat[: end - hi] * 0.8
+                right[hi:end] += hat[: end - hi]
         t += beat
         beat_i += 1
 
-    # Soft vinyl / room noise for concentration warmth
-    crackle = rng.normal(0, 1, n) * 0.008
-    crackle = np.convolve(crackle, np.ones(32) / 32, mode="same")
+    # Very soft room tone (no scratchy vinyl hiss)
+    crackle = rng.normal(0, 1, n) * 0.003
+    crackle = np.convolve(crackle, np.ones(96) / 96, mode="same")
     left += crackle
     right += crackle * 0.9
 
-    # Learning-friendly soft lead motif (pentatonic-ish)
-    motif = [392.00, 440.00, 523.25, 493.88, 440.00, 349.23, 392.00]
+    # Soft mid-range lead (avoid bright/piercing highs that clash with VO)
+    motif = [261.63, 293.66, 329.63, 349.23, 329.63, 246.94, 261.63]
     motif_start = int(2.0 * SAMPLE_RATE)
     mi = 0
     while motif_start < n - SAMPLE_RATE:
         f = motif[mi % len(motif)]
-        note_n = int(0.42 * SAMPLE_RATE)
-        lead = chord_tone(f, note_n, vibrato=1.2) * env_exp(note_n, 0.02, 0.3) * 0.09
+        note_n = int(0.48 * SAMPLE_RATE)
+        lead = chord_tone(f, note_n, vibrato=0.6) * env_exp(note_n, 0.03, 0.35) * 0.045
         end = min(n, motif_start + note_n)
         left[motif_start:end] += lead[: end - motif_start] * 0.85
         right[motif_start:end] += lead[: end - motif_start]
-        motif_start += int(beat * 2 * SAMPLE_RATE)
+        motif_start += int(beat * 2.5 * SAMPLE_RATE)
         mi += 1
 
-    # Fade in/out + gentle limiter
+    # Fade in/out + gentle peak control (leave headroom)
     fade_in = int(1.2 * SAMPLE_RATE)
     fade_out = int(2.0 * SAMPLE_RATE)
     left[:fade_in] *= np.linspace(0, 1, fade_in)
@@ -315,7 +318,7 @@ def make_study_bed(seconds: float, seed: int = 11) -> tuple[np.ndarray, np.ndarr
     right[-fade_out:] *= np.linspace(1, 0, fade_out)
 
     peak = max(np.max(np.abs(left)), np.max(np.abs(right)), 1e-9)
-    gain = 0.72 / peak
+    gain = 0.55 / peak
     return left * gain, right * gain
 
 
@@ -324,16 +327,29 @@ def make_music(dest: Path, seconds: float, seed: int = 11) -> None:
     wav = dest.with_suffix(".wav.tmp")
     write_wav_stereo(wav, left, right)
     out = dest if dest.suffix == ".m4a" else dest.with_suffix(".m4a")
+    # Hearing-safer bed: roll off harsh highs, carve speech band, soft true-peak
     run(
         [
             "ffmpeg",
             "-y",
             "-i",
             str(wav),
+            "-af",
+            (
+                "highpass=f=70,"
+                "lowpass=f=4800,"
+                "equalizer=f=2500:t=q:w=1.2:g=-5,"
+                "equalizer=f=6000:t=q:w=1.0:g=-8,"
+                "acompressor=threshold=-20dB:ratio=2.2:attack=20:release=200,"
+                "alimiter=limit=0.89:level=false,"
+                "loudnorm=I=-22:TP=-3:LRA=8"
+            ),
             "-c:a",
             "aac",
             "-b:a",
             "192k",
+            "-ar",
+            "48000",
             str(out),
         ]
     )
@@ -348,9 +364,9 @@ def make_whoosh(dest: Path) -> None:
             "-f",
             "lavfi",
             "-i",
-            "anoisesrc=color=white:amplitude=0.2:duration=0.35",
+            "anoisesrc=color=pink:amplitude=0.12:duration=0.3",
             "-af",
-            "highpass=f=800,lowpass=f=6000,afade=t=in:st=0:d=0.05,afade=t=out:st=0.15:d=0.2,volume=0.25",
+            "highpass=f=400,lowpass=f=3500,afade=t=in:st=0:d=0.05,afade=t=out:st=0.12:d=0.18,volume=0.12",
             str(dest),
         ]
     )
@@ -436,7 +452,7 @@ async def speak(text: str, dest: Path) -> None:
                 "-i",
                 str(concat_list),
                 "-af",
-                "highpass=f=80,lowpass=f=12000,acompressor=threshold=-18dB:ratio=2.5:attack=10:release=120,loudnorm=I=-14:TP=-1.5:LRA=9",
+                "highpass=f=90,lowpass=f=11000,equalizer=f=2200:t=q:w=1.0:g=2,acompressor=threshold=-18dB:ratio=2.5:attack=10:release=120,loudnorm=I=-14:TP=-2.5:LRA=8",
                 "-ar",
                 "48000",
                 "-ac",
