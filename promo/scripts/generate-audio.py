@@ -183,28 +183,27 @@ def env_exp(n: int, attack: float, release: float) -> np.ndarray:
 
 
 def soft_kick(n: int) -> np.ndarray:
-    """Warm kick — no sharp click (hearing-safer)."""
+    """Very soft low kick — kept gentle so it never overwhelms VO."""
     t = np.arange(n) / SAMPLE_RATE
-    freq = 120 * np.exp(-16 * t) + 42
-    body = np.sin(2 * np.pi * freq * t) * env_exp(n, 0.003, n / SAMPLE_RATE * 0.9)
-    return body * 0.42
+    freq = 95 * np.exp(-14 * t) + 40
+    body = np.sin(2 * np.pi * freq * t) * env_exp(n, 0.004, n / SAMPLE_RATE * 0.85)
+    return body * 0.22
 
 
 def soft_snare(n: int) -> np.ndarray:
     """Soft brushed snare — limited treble."""
     t = np.arange(n) / SAMPLE_RATE
     noise = np.random.default_rng(7).normal(0, 1, n) * env_exp(n, 0.002, 0.14)
-    # gentle lowpass of noise (moving average) to avoid harsh hiss
-    noise = np.convolve(noise, np.ones(48) / 48, mode="same")
-    tone = np.sin(2 * np.pi * 170 * t) * env_exp(n, 0.002, 0.1) * 0.28
-    return (noise * 0.28 + tone) * 0.16
+    noise = np.convolve(noise, np.ones(64) / 64, mode="same")
+    tone = np.sin(2 * np.pi * 160 * t) * env_exp(n, 0.002, 0.1) * 0.2
+    return (noise * 0.18 + tone) * 0.1
 
 
 def soft_hat(n: int) -> np.ndarray:
-    """Very soft mid hat — no piercing highs."""
+    """Nearly silent mid tick — no piercing content."""
     noise = np.random.default_rng(3).normal(0, 1, n)
-    hat = np.convolve(noise, np.ones(64) / 64, mode="same")
-    return hat * env_exp(n, 0.001, 0.05) * 0.035
+    hat = np.convolve(noise, np.ones(96) / 96, mode="same")
+    return hat * env_exp(n, 0.001, 0.05) * 0.015
 
 
 def chord_tone(freq: float, n: int, vibrato: float = 0.0) -> np.ndarray:
@@ -245,7 +244,7 @@ def make_study_bed(seconds: float, seed: int = 11) -> tuple[np.ndarray, np.ndarr
         pad = np.zeros(length)
         for i, f in enumerate(chords[ci % len(chords)]):
             tone = chord_tone(f, length, vibrato=0.4 + 0.1 * i)
-            pad += tone * (0.18 if i < 2 else 0.12)
+            pad += tone * (0.14 if i < 2 else 0.08)
         pad *= env_exp(length, 0.08, 0.25)
         # light stereo spread
         left[pos:end] += pad * 0.85
@@ -336,13 +335,14 @@ def make_music(dest: Path, seconds: float, seed: int = 11) -> None:
             str(wav),
             "-af",
             (
-                "highpass=f=70,"
-                "lowpass=f=4800,"
-                "equalizer=f=2500:t=q:w=1.2:g=-5,"
-                "equalizer=f=6000:t=q:w=1.0:g=-8,"
-                "acompressor=threshold=-20dB:ratio=2.2:attack=20:release=200,"
-                "alimiter=limit=0.89:level=false,"
-                "loudnorm=I=-22:TP=-3:LRA=8"
+                "highpass=f=80,"
+                "lowpass=f=3500,"
+                "equalizer=f=90:t=q:w=1.0:g=-5,"
+                "equalizer=f=2500:t=q:w=1.2:g=-4,"
+                "equalizer=f=6000:t=q:w=1.0:g=-12,"
+                "acompressor=threshold=-22dB:ratio=2.0:attack=25:release=220,"
+                "alimiter=limit=0.85:level=false,"
+                "loudnorm=I=-24:TP=-4:LRA=7"
             ),
             "-c:a",
             "aac",
@@ -403,24 +403,43 @@ async def speak_phrase(text: str, dest: Path) -> None:
         VOICE_NAME,
         rate=VOICE_RATE,
         pitch=VOICE_PITCH,
-        volume="+2%",
+        volume="+0%",
     )
     await communicate.save(str(dest))
 
 
 async def speak(text: str, dest: Path) -> None:
-    """Sentence-paced VO for a warmer, more human delivery."""
+    """Sentence-paced VO — consistent 48 kHz chain to avoid Nyquist/whistle artifacts."""
     phrases = split_phrases(text)
     tmp_dir = dest.parent / f".vo_{dest.stem}"
     tmp_dir.mkdir(parents=True, exist_ok=True)
-    parts: list[Path] = []
+    wav_parts: list[Path] = []
     try:
         for i, phrase in enumerate(phrases):
-            part = tmp_dir / f"p{i:02d}.mp3"
-            await speak_phrase(phrase, part)
-            parts.append(part)
-            # short breath gap between phrases
+            raw_mp3 = tmp_dir / f"p{i:02d}.mp3"
+            phrase_wav = tmp_dir / f"p{i:02d}.wav"
+            await speak_phrase(phrase, raw_mp3)
+            # Resample each phrase to 48 kHz BEFORE concat (prevents 12 kHz whistle)
+            run(
+                [
+                    "ffmpeg",
+                    "-y",
+                    "-i",
+                    str(raw_mp3),
+                    "-af",
+                    "aresample=48000,highpass=f=100,lowpass=f=8000",
+                    "-ar",
+                    "48000",
+                    "-ac",
+                    "1",
+                    "-c:a",
+                    "pcm_s16le",
+                    str(phrase_wav),
+                ]
+            )
+            wav_parts.append(phrase_wav)
             silence = tmp_dir / f"s{i:02d}.wav"
+            gap = "0.20" if i < len(phrases) - 1 else "0.05"
             run(
                 [
                     "ffmpeg",
@@ -428,19 +447,22 @@ async def speak(text: str, dest: Path) -> None:
                     "-f",
                     "lavfi",
                     "-i",
-                    "anullsrc=r=24000:cl=mono",
+                    "anullsrc=r=48000:cl=mono",
                     "-t",
-                    "0.22" if i < len(phrases) - 1 else "0.05",
+                    gap,
+                    "-c:a",
+                    "pcm_s16le",
                     str(silence),
                 ]
             )
-            parts.append(silence)
+            wav_parts.append(silence)
 
         concat_list = tmp_dir / "list.txt"
-        lines = []
-        for p in parts:
-            lines.append(f"file '{p.resolve()}'")
-        concat_list.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        concat_list.write_text(
+            "\n".join(f"file '{p.resolve()}'" for p in wav_parts) + "\n",
+            encoding="utf-8",
+        )
+        # Speech clarity without harsh highs; stable level (no late-file quieting)
         run(
             [
                 "ffmpeg",
@@ -452,7 +474,17 @@ async def speak(text: str, dest: Path) -> None:
                 "-i",
                 str(concat_list),
                 "-af",
-                "highpass=f=90,lowpass=f=11000,equalizer=f=2200:t=q:w=1.0:g=2,acompressor=threshold=-18dB:ratio=2.5:attack=10:release=120,loudnorm=I=-14:TP=-2.5:LRA=8",
+                (
+                    "aresample=48000,"
+                    "highpass=f=100,"
+                    "lowpass=f=7800,"
+                    "equalizer=f=12000:t=q:w=2:g=-30,"
+                    "equalizer=f=2000:t=q:w=1.0:g=2.0,"
+                    "equalizer=f=300:t=q:w=1.0:g=-1.5,"
+                    "acompressor=threshold=-20dB:ratio=2.2:attack=15:release=150:makeup=2,"
+                    "alimiter=limit=0.90:level=false,"
+                    "loudnorm=I=-14:TP=-3:LRA=7"
+                ),
                 "-ar",
                 "48000",
                 "-ac",

@@ -172,16 +172,18 @@ ${assBody}
   }
 
   if (mutedMix || !vo) {
-    // Music-only: pleasant, hearing-safer bed (no piercing highs / hot peaks)
+    // Music-only: quiet, hearing-safer bed for the full runtime
     run([
       "ffmpeg", "-y",
       "-i", silent,
       "-stream_loop", "-1", "-i", music,
       "-filter_complex",
       `[0:v]ass=${ass}[v];` +
-        `[1:a]highpass=f=70,lowpass=f=5000,equalizer=f=6000:t=q:w=1:g=-10,volume=0.55,` +
+        `[1:a]aformat=sample_rates=48000:channel_layouts=stereo,` +
+        `highpass=f=80,lowpass=f=3500,equalizer=f=90:t=q:w=1:g=-4,volume=0.42,` +
         `afade=t=in:st=0:d=0.4,afade=t=out:st=${Math.max(seconds - 1.2, 0)}:d=1.1,` +
-        `atrim=0:${seconds},loudnorm=I=-18:TP=-3:LRA=9,aformat=sample_rates=48000:channel_layouts=stereo[a]`,
+        `atrim=0:${seconds},alimiter=limit=0.85:level=false,` +
+        `loudnorm=I=-20:TP=-3:LRA=8,aformat=sample_rates=48000:channel_layouts=stereo[a]`,
       "-map", "[v]", "-map", "[a]",
       "-t", String(seconds),
       "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
@@ -192,31 +194,32 @@ ${assBody}
     return;
   }
 
-  // Speech-first mix: clear VO, quiet ducked bed, hearing-safer peaks (TP≈-3)
-  const ducked = [
+  // Stable speech-first mix:
+  // - pad VO to full duration (prevents audio dying mid-video / bass takeover)
+  // - kill >8 kHz whistle band
+  // - keep music very quiet and bass-light so it never drowns VO
+  const mix = [
     "ffmpeg", "-y",
     "-i", silent,
     "-i", vo,
     "-stream_loop", "-1", "-i", music,
     "-filter_complex",
     `[0:v]ass=${ass}[v];` +
-      // Voice: clarity band, gentle compression, ahead of music
-      `[1:a]aformat=sample_rates=48000:channel_layouts=stereo,` +
-      `highpass=f=90,lowpass=f=11000,` +
-      `equalizer=f=2200:t=q:w=1.0:g=2.5,` +
-      `equalizer=f=350:t=q:w=1.0:g=-2,` +
-      `acompressor=threshold=-18dB:ratio=2.8:attack=8:release=120,` +
-      `loudnorm=I=-14:TP=-2.5:LRA=8,afade=t=in:st=0:d=0.06,volume=1.25,asplit=2[vo][vo2];` +
-      // Music: quieter, speech-band carve-out, strong duck under VO
+      `[1:a]aformat=sample_rates=48000:channel_layouts=mono,` +
+      `aresample=48000,highpass=f=100,lowpass=f=7800,` +
+      `equalizer=f=12000:t=q:w=2:g=-40,` +
+      `equalizer=f=2000:t=q:w=1.0:g=2.0,` +
+      `acompressor=threshold=-20dB:ratio=2.2:attack=15:release=160:makeup=2,` +
+      `volume=1.35,apad=whole_dur=${seconds},aformat=channel_layouts=stereo[vo];` +
       `[2:a]aformat=sample_rates=48000:channel_layouts=stereo,` +
-      `highpass=f=80,lowpass=f=4200,` +
-      `equalizer=f=2400:t=q:w=1.3:g=-8,` +
-      `equalizer=f=5500:t=q:w=1.0:g=-12,` +
-      `volume=0.18[mus];` +
-      `[mus][vo]sidechaincompress=threshold=0.02:ratio=12:attack=12:release=520:makeup=1:level_sc=1[ducked];` +
-      `[ducked][vo2]amix=inputs=2:duration=first:dropout_transition=0:normalize=0,` +
-      `atrim=0:${seconds},alimiter=limit=0.89:level=false,` +
-      `loudnorm=I=-16:TP=-3:LRA=9,aformat=sample_rates=48000:channel_layouts=stereo[a]`,
+      `highpass=f=100,lowpass=f=3200,` +
+      `equalizer=f=80:t=q:w=1.0:g=-6,` +
+      `equalizer=f=120:t=q:w=1.0:g=-4,` +
+      `equalizer=f=2400:t=q:w=1.2:g=-6,` +
+      `volume=0.09,atrim=0:${seconds},asetpts=PTS-STARTPTS[mus];` +
+      `[mus][vo]amix=inputs=2:duration=longest:dropout_transition=0:normalize=0,` +
+      `atrim=0:${seconds},alimiter=limit=0.88:level=false,` +
+      `loudnorm=I=-16:TP=-3:LRA=8,aformat=sample_rates=48000:channel_layouts=stereo[a]`,
     "-map", "[v]", "-map", "[a]",
     "-t", String(seconds),
     "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
@@ -224,29 +227,7 @@ ${assBody}
     "-movflags", "+faststart",
     out,
   ];
-  const simple = [
-    "ffmpeg", "-y",
-    "-i", silent,
-    "-i", vo,
-    "-stream_loop", "-1", "-i", music,
-    "-filter_complex",
-    `[0:v]ass=${ass}[v];` +
-      `[1:a]aformat=sample_rates=48000:channel_layouts=stereo,highpass=f=90,equalizer=f=2200:t=q:w=1:g=2.5,` +
-      `loudnorm=I=-14:TP=-2.5:LRA=8,volume=1.3[vo];` +
-      `[2:a]aformat=sample_rates=48000:channel_layouts=stereo,highpass=f=80,lowpass=f=4000,` +
-      `equalizer=f=2400:t=q:w=1.2:g=-8,volume=0.12[mus];` +
-      `[mus][vo]amix=inputs=2:duration=first:dropout_transition=2:normalize=0,` +
-      `atrim=0:${seconds},alimiter=limit=0.89:level=false,` +
-      `loudnorm=I=-16:TP=-3:LRA=9,aformat=sample_rates=48000:channel_layouts=stereo[a]`,
-    "-map", "[v]", "-map", "[a]",
-    "-t", String(seconds),
-    "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
-    "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
-    "-movflags", "+faststart",
-    out,
-  ];
-  const res = spawnSync(ducked[0], ducked.slice(1), { stdio: "inherit" });
-  if (res.status !== 0) run(simple);
+  run(mix);
 }
 
 function makeThumbnail(video, outJpg) {
