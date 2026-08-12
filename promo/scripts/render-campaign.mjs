@@ -94,7 +94,7 @@ async function recordComposition(port, set, ratio, seconds) {
     recordVideo: { dir: TMP, size },
   });
   const page = await context.newPage();
-  const url = `http://127.0.0.1:${port}/compositions/player.html?set=${set}&ratio=${ratio}`;
+  const url = `http://127.0.0.1:${port}/compositions/player.html?set=${encodeURIComponent(set)}&ratio=${encodeURIComponent(ratio)}&capture=1`;
   await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
   await page.waitForFunction(() => window.__PROMO__ && window.__PROMO__.scenes);
   // Play timeline (slightly pad end)
@@ -125,51 +125,12 @@ async function recordComposition(port, set, ratio, seconds) {
 }
 
 function burnAndMix({ silent, vo, music, srt, out, seconds, mutedMix, ratio }) {
-  const ass = path.join(TMP, `${path.basename(out)}.ass`);
-  const size = SIZE[ratio] || SIZE["16x9"];
-  const fontSize = ratio === "16x9" ? 48 : 44;
-  if (fs.existsSync(srt)) {
-    const srtText = fs.readFileSync(srt, "utf8");
-    const cues = [];
-    const blocks = srtText.trim().split(/\n\s*\n/);
-    for (const block of blocks) {
-      const lines = block.split("\n");
-      if (lines.length < 3) continue;
-      const m = lines[1].match(/(\d{2}):(\d{2}):(\d{2}),(\d{3})\s*-->\s*(\d{2}):(\d{2}):(\d{2}),(\d{3})/);
-      if (!m) continue;
-      const toSec = (h, mi, s, ms) => +h * 3600 + +mi * 60 + +s + +ms / 1000;
-      const start = toSec(m[1], m[2], m[3], m[4]);
-      const end = toSec(m[5], m[6], m[7], m[8]);
-      const text = lines.slice(2).join("\\N");
-      cues.push({ start, end, text });
-    }
-    const ts = (v) => {
-      const h = Math.floor(v / 3600);
-      const mi = Math.floor((v % 3600) / 60);
-      const s = v % 60;
-      return `${h}:${String(mi).padStart(2, "0")}:${s.toFixed(2).padStart(5, "0")}`;
-    };
-    const assBody = cues
-      .map((c) => `Dialogue: 0,${ts(c.start)},${ts(c.end)},Default,,0,0,0,,${c.text}`)
-      .join("\n");
-    fs.writeFileSync(
-      ass,
-      `[Script Info]
-ScriptType: v4.00+
-PlayResX: ${size.width}
-PlayResY: ${size.height}
-
-[V4+ Styles]
-Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,Arial,${fontSize},&H00FFFFFF,&H000000FF,&H00101010,&H90000000,-1,0,0,0,100,100,0,0,1,3,0,2,80,80,70,1
-
-[Events]
-Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-${assBody}
-`,
-      "utf8",
-    );
-  }
+  // Do NOT burn ASS/SRT into the picture — composition already has on-screen copy.
+  // Burning captions stacked a second text layer under the headlines ("subtitles under subtitles").
+  // Soft sidecar .srt/.vtt remain in promo/subtitles/ for optional player captions.
+  void srt;
+  void ratio;
+  const vfilt = "[0:v]null[v]";
 
   if (mutedMix || !vo) {
     // Music-only: quiet, hearing-safer bed for the full runtime
@@ -178,7 +139,7 @@ ${assBody}
       "-i", silent,
       "-stream_loop", "-1", "-i", music,
       "-filter_complex",
-      `[0:v]ass=${ass}[v];` +
+      `${vfilt};` +
         `[1:a]aformat=sample_rates=48000:channel_layouts=stereo,` +
         `highpass=f=80,lowpass=f=3500,equalizer=f=90:t=q:w=1:g=-4,volume=0.42,` +
         `afade=t=in:st=0:d=0.4,afade=t=out:st=${Math.max(seconds - 1.2, 0)}:d=1.1,` +
@@ -198,13 +159,14 @@ ${assBody}
   // - pad VO to full duration (prevents audio dying mid-video / bass takeover)
   // - kill >8 kHz whistle band
   // - keep music very quiet and bass-light so it never drowns VO
+  // - single burned caption layer only (no composition caption bar)
   const mix = [
     "ffmpeg", "-y",
     "-i", silent,
     "-i", vo,
     "-stream_loop", "-1", "-i", music,
     "-filter_complex",
-    `[0:v]ass=${ass}[v];` +
+    `${vfilt};` +
       `[1:a]aformat=sample_rates=48000:channel_layouts=mono,` +
       `aresample=48000,highpass=f=100,lowpass=f=7800,` +
       `equalizer=f=12000:t=q:w=2:g=-40,` +

@@ -17,10 +17,24 @@
         position: absolute;
         inset: 0;
         opacity: 0;
+        visibility: hidden;
         pointer-events: none;
       }
-      .scene.active { opacity: 1; pointer-events: auto; }
-      .caption-bar.visible { opacity: 1; transition: opacity 0.25s ease; }
+      .scene.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        z-index: 2;
+      }
+      /* Capture mode: no motion trails that look like doubled text */
+      html.capture-mode .fade-in,
+      html.capture-mode .fade-up,
+      html.capture-mode .slide-in-right,
+      html.capture-mode .scale-in {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
       .warm-stage {
         background:
           radial-gradient(ellipse 60% 50% at 80% 20%, rgb(138 106 69 / 0.22), transparent 55%),
@@ -34,6 +48,9 @@
       const params = new URLSearchParams(location.search);
       const ratio = params.get("ratio") || "16x9";
       const sceneSet = params.get("set") || "hero";
+      if (params.get("capture") === "1") {
+        document.documentElement.classList.add("capture-mode");
+      }
 
       const CAPTURE = {
         home: "../captures/stills/abel-home-hero.png",
@@ -209,10 +226,7 @@
           stage.appendChild(safe);
         }
 
-        if (scene.caption) {
-          const cap = el("div", "caption-bar visible", scene.caption);
-          stage.appendChild(cap);
-        }
+        // Captions are burned in later from SRT/ASS (avoid a second on-screen caption bar).
         return stage;
       }
 
