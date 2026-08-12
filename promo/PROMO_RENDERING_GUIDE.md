@@ -33,7 +33,7 @@ One-shot:
 bash promo/scripts/render-all.sh
 ```
 
-Audio notes: VO uses warm `en-GB-LibbyNeural` (sentence-paced). Music is an original fun learning / concentration lo-fi bed. Final MP4s mux VO + music with ducking.
+Audio notes: VO uses warm `en-GB-LibbyNeural` (sentence-paced). Music is an original fun learning / concentration lo-fi bed with softened highs (no piercing hats/clicks). Final MP4s use a speech-first mix: quiet ducked music under VO, speech-band EQ carve-out, and true-peak limiting around −3 dBTP for hearing comfort.
 
 ## Edit scripts / scenes
 
