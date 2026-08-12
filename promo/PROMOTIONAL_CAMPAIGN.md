@@ -43,7 +43,7 @@ Validation: `promo/qa/validation-report.json`
 - **Voice:** Warm British neural VO `en-GB-LibbyNeural` via `edge-tts` (sentence-paced with short breath gaps, slightly slower rate / lower pitch for a human, friendly tone). Closest free/local option to hired human VO; drop replacement files into `promo/audio/voice/` to swap.
 - **Music:** Original fun learning / concentration lo-fi beds (88 BPM soft groove, warm chords, light melody) generated locally with NumPy + FFmpeg — licence-safe, no copyrighted commercial tracks
 - **Captions:** `.srt` + `.vtt` in `promo/subtitles/`, burned into MP4s
-- **Mix (speech-first):** VO ~−14 LUFS; music bed ~−22 LUFS with speech-band carve-out; aggressive sidechain ducking under narration; final ~−16 LUFS with true-peak ≈ −3 dBTP (hearing-safer — no piercing highs / hot peaks)
+- **Mix (speech-first):** VO padded to full runtime so audio never dies mid-video; music kept very quiet and bass-light; harsh >8 kHz whistle band removed; final ≈ −16 LUFS / −3 dBTP
 
 ## Technical implementation
 
