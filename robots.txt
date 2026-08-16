@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://mrlucien-johnson.github.io/AbelSolutions/sitemap.xml
