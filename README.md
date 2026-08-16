@@ -1,5 +1,9 @@
 # Abel Solutions Limited — Website
 
+> **Live website:** [https://mrlucien-johnson.github.io/AbelSolutions/](https://mrlucien-johnson.github.io/AbelSolutions/)  
+> This repository is the **source code**. If you see npm install instructions in the browser instead of the Abel Solutions site, open **Settings → Pages**, set Source to **GitHub Actions** (recommended) or branch **`gh-pages`** / folder **`/`**, then Save.
+
+
 Production-ready website for **Abel Solutions Limited**, a UK-based company providing technology and construction services across London and surrounding areas.
 
 ## Stack

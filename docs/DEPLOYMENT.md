@@ -6,6 +6,19 @@ The live public site is intended for **GitHub Pages**. Visitors only need a link
 
 https://mrlucien-johnson.github.io/AbelSolutions/
 
+
+## If the live URL shows npm / README instead of the website
+
+GitHub Pages is still on the **legacy** source (`main` branch root). That publishes the README via Jekyll, not the Next.js build.
+
+Fix (one-time, repo owner):
+
+1. Open https://github.com/MrLucien-Johnson/AbelSolutions/settings/pages
+2. Under **Build and deployment → Source**, choose **GitHub Actions** (preferred) **or** Deploy from a branch → **`gh-pages`** → **`/`**
+3. Save, wait about a minute, reload the public URL
+
+Until that is changed, a static export is also kept at the repository root (`index.html`, `_next/`, `.nojekyll`) so the legacy `main` source can still serve the real site.
+
 ## One-time Pages setting
 
 In the repository on GitHub:

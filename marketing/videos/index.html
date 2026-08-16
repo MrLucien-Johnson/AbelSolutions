@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Abel Solutions — promotional videos</title>
+    <style>
+      :root {
+        --navy: #0b1c2c;
+        --blue: #1f6fad;
+        --sand: #f2efe8;
+        --ink: #142033;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Source Sans 3", "Segoe UI", sans-serif;
+        background: linear-gradient(165deg, #0b1c2c 0%, #16324a 45%, #1a3d55 100%);
+        color: #f5f7fa;
+        min-height: 100vh;
+        padding: 2rem 1.25rem 4rem;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-family: Outfit, "Source Sans 3", sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.35rem;
+      }
+      p.lead {
+        color: #c9d5e2;
+        margin: 0 0 1.75rem;
+        max-width: 42rem;
+      }
+      a {
+        color: #9ec9ef;
+      }
+      .grid {
+        display: grid;
+        gap: 1.25rem;
+      }
+      article {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        padding: 1rem 1rem 1.15rem;
+      }
+      h2 {
+        font-size: 1.05rem;
+        margin: 0 0 0.65rem;
+        font-weight: 600;
+      }
+      video {
+        width: 100%;
+        max-height: 420px;
+        background: #000;
+        border-radius: 8px;
+        display: block;
+      }
+      .meta {
+        margin-top: 0.65rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem 1rem;
+        font-size: 0.92rem;
+        color: #d5e0eb;
+      }
+      .meta a {
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid var(--blue);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Abel Solutions promotional videos</h1>
+      <p class="lead">
+        Playable MP4 campaign exports. Use the player below, or right‑click /
+        use the download link to save each file. Full catalogue and rebuild docs
+        live in the repository under <code>promo/</code>.
+      </p>
+      <div class="grid" id="list"></div>
+    </main>
+    <script>
+      const videos = [
+        { file: "promo-hero-55s-16x9.mp4", title: "Hero / main promo", meta: "55s · 16:9" },
+        { file: "promo-hero-55s-9x16.mp4", title: "Hero / main promo", meta: "55s · 9:16" },
+        { file: "promo-short-29s-16x9.mp4", title: "Short product promo", meta: "29s · 16:9" },
+        { file: "promo-short-29s-9x16.mp4", title: "Short product promo", meta: "29s · 9:16" },
+        { file: "promo-social-15s-9x16.mp4", title: "Social ad", meta: "15s · 9:16" },
+        { file: "promo-social-15s-1x1.mp4", title: "Social ad", meta: "15s · 1:1" },
+        { file: "promo-micro-8s-9x16.mp4", title: "Micro promo", meta: "8.5s · 9:16" },
+        { file: "promo-explainer-72s-16x9.mp4", title: "Explainer", meta: "72s · 16:9" },
+        { file: "promo-features-46s-16x9.mp4", title: "Feature showcase", meta: "46s · 16:9" },
+        { file: "promo-features-46s-9x16.mp4", title: "Feature showcase", meta: "46s · 9:16" },
+        { file: "promo-brand-film-30s-16x9.mp4", title: "Cinematic brand film", meta: "30s · 16:9" },
+        { file: "promo-brand-film-30s-9x16.mp4", title: "Cinematic brand film", meta: "30s · 9:16" },
+        { file: "promo-autoplay-muted-20s-16x9.mp4", title: "Silent / autoplay", meta: "20s · 16:9" },
+      ];
+      const root = document.getElementById("list");
+      for (const v of videos) {
+        const article = document.createElement("article");
+        article.innerHTML = `
+          <h2>${v.title}</h2>
+          <video controls preload="metadata" playsinline src="./${v.file}"></video>
+          <div class="meta">
+            <span>${v.meta}</span>
+            <a href="./${v.file}" download="${v.file}">Download MP4</a>
+          </div>`;
+        root.appendChild(article);
+      }
+    </script>
+  </body>
+</html>
