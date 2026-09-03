@@ -42,8 +42,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-border)]/80 bg-[var(--color-surface)]/95 backdrop-blur-md">
-      <div className="container-site flex h-[4.5rem] items-center justify-between gap-4 md:h-[5rem]">
-        <BrandMark />
+      <div className="container-site flex h-[4.5rem] items-center justify-between gap-3 md:h-[5rem] md:gap-4">
+        <BrandMark className="min-w-0" />
 
         <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-1">
@@ -70,15 +70,15 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-3">
-          <Button href="/quote" className="hidden sm:inline-flex" size="md">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <Button href="/quote/" className="hidden lg:inline-flex" size="md">
             Request a Quote
           </Button>
 
           <button
             ref={menuButtonRef}
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] text-[var(--color-navy)] lg:hidden"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] text-[var(--color-navy)] lg:hidden"
             aria-expanded={open}
             aria-controls={panelId}
             aria-label={open ? "Close menu" : "Open menu"}
@@ -152,7 +152,7 @@ export function Header() {
             })}
           </ul>
           <div className="mt-6">
-            <Button href="/quote" className="w-full" size="lg" onClick={closeMenu}>
+            <Button href="/quote/" className="w-full" size="lg" onClick={closeMenu}>
               Request a Quote
             </Button>
           </div>

@@ -45,31 +45,33 @@ export default function HomePage() {
 
   return (
     <>
-      <AmbientStage className="min-h-[min(92vh,920px)]" label="Abel Solutions home">
-        <div className="container-site relative flex min-h-[min(92vh,920px)] flex-col justify-end pb-[clamp(3.5rem,8vw,6rem)] pt-[clamp(7rem,14vw,11rem)]">
-          <p className="fade-up font-display text-[clamp(2.6rem,7vw,5.4rem)] font-bold leading-[0.92] tracking-[0.08em] text-white">
-            ABEL&nbsp;SOLUTIONS
+      <AmbientStage className="min-h-[min(92vh,920px)] overflow-x-clip" label="Abel Solutions home">
+        <div className="container-site relative flex min-h-[min(92vh,920px)] flex-col justify-end pb-[clamp(3.5rem,8vw,6rem)] pt-[clamp(6rem,12vw,11rem)]">
+          <p className="fade-up font-display max-w-full text-[clamp(2.15rem,11vw,5.4rem)] font-bold leading-[0.94] tracking-[0.04em] text-white sm:tracking-[0.08em]">
+            <span className="block sm:inline">ABEL</span>
+            <span className="hidden sm:inline"> </span>
+            <span className="block sm:inline">SOLUTIONS</span>
           </p>
           <div className="mt-3 h-1 w-16 rounded-[var(--radius-sm)] bg-[var(--color-accent)] fade-up" aria-hidden="true" />
-          <p className="fade-up mt-4 type-eyebrow text-white/65">
+          <p className="fade-up mt-4 type-eyebrow text-white/70">
             Technology · Construction
           </p>
-          <h1 className="fade-up mt-8 max-w-3xl text-white">
+          <h1 className="fade-up mt-8 max-w-3xl text-balance text-white">
             Technology and construction solutions you can depend on.
           </h1>
-          <p className="fade-up-delay mt-6 mb-10 max-w-2xl text-lg md:text-xl leading-body text-white/80">
+          <p className="fade-up-delay mt-6 mb-10 max-w-2xl text-lg md:text-xl leading-body text-white/90">
             Practical help for homes and businesses across London and surrounding
             areas — repairs, custom systems, installations and construction support
             under one clear point of contact.
           </p>
-          <div className="fade-up-delay-2 flex flex-wrap gap-3">
-            <MagneticAction>
-              <Button href="/quote/" variant="on-dark" size="lg">
+          <div className="fade-up-delay-2 flex w-full max-w-md flex-col gap-3 sm:max-w-none sm:flex-row sm:flex-wrap">
+            <MagneticAction className="w-full sm:w-auto">
+              <Button href="/quote/" variant="on-dark" size="lg" className="w-full sm:w-auto">
                 Request a Quote
               </Button>
             </MagneticAction>
-            <MagneticAction>
-              <Button href="#services" variant="on-dark-secondary" size="lg">
+            <MagneticAction className="w-full sm:w-auto">
+              <Button href="#services" variant="on-dark-secondary" size="lg" className="w-full sm:w-auto">
                 Explore Our Services
               </Button>
             </MagneticAction>
