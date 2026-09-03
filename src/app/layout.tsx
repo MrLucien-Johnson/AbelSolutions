@@ -7,6 +7,7 @@ import { OrganizationJsonLd } from "@/components/seo/JsonLd";
 import { siteConfig } from "@/config/site";
 import { absoluteUrl } from "@/lib/utils";
 import "./globals.css";
+import "@/widgets/styles/widgets.css";
 
 const outfit = Outfit({
   variable: "--font-outfit",
