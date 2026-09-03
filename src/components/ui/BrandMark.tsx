@@ -20,7 +20,7 @@ export function BrandMark({
     <Link
       href="/"
       className={cn(
-        "group inline-flex items-center gap-3 rounded-sm leading-none",
+        "group inline-flex max-w-full min-w-0 items-center gap-2.5 rounded-sm leading-none sm:gap-3",
         "focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4",
         className,
       )}
@@ -33,7 +33,7 @@ export function BrandMark({
           alt=""
           width={36}
           height={36}
-          className="h-9 w-9 object-contain"
+          className="h-9 w-9 shrink-0 object-contain"
         />
       ) : (
         <span
@@ -51,22 +51,22 @@ export function BrandMark({
         </span>
       )}
 
-      <span className="inline-flex flex-col">
+      <span className="inline-flex min-w-0 flex-col">
         <span
           className={cn(
-            "font-display text-[1.02rem] font-bold tracking-[0.12em]",
+            "font-display text-[0.92rem] font-bold tracking-[0.1em] sm:text-[1.02rem] sm:tracking-[0.12em]",
             tone === "light" ? "text-white" : "text-[var(--color-navy)]",
           )}
         >
           ABEL&nbsp;SOLUTIONS
         </span>
         <span
-          className="mt-1.5 h-0.5 w-10 rounded-[var(--radius-sm)] bg-[var(--color-accent)]"
+          className="mt-1.5 hidden h-0.5 w-10 rounded-[var(--radius-sm)] bg-[var(--color-accent)] sm:block"
           aria-hidden="true"
         />
         <span
           className={cn(
-            "mt-1.5 text-xs font-medium tracking-[var(--tracking-eyebrow)] uppercase",
+            "mt-1.5 hidden text-xs font-medium tracking-[var(--tracking-eyebrow)] uppercase sm:block",
             tone === "light" ? "text-white/65" : "text-[var(--color-muted)]",
           )}
         >
