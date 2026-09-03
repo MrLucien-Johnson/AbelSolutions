@@ -10,17 +10,22 @@ import { siteConfig } from "@/config/site";
 export function BrandMark({
   className,
   tone = "dark",
+  /** `nav` = single-line mark for the sticky header; `full` includes tagline */
+  density = "full",
 }: {
   className?: string;
   tone?: "dark" | "light";
+  density?: "full" | "nav";
 }) {
   const logoImage = siteConfig.brand.logoImage;
+  const isNav = density === "nav";
 
   return (
     <Link
       href="/"
       className={cn(
-        "group inline-flex max-w-full min-w-0 items-center gap-2.5 rounded-sm leading-none sm:gap-3",
+        "group inline-flex max-w-full min-w-0 items-center rounded-sm leading-none",
+        isNav ? "gap-2.5" : "gap-2.5 sm:gap-3",
         "focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4",
         className,
       )}
@@ -33,45 +38,61 @@ export function BrandMark({
           alt=""
           width={36}
           height={36}
-          className="h-9 w-9 shrink-0 object-contain"
+          className={cn(
+            "shrink-0 object-contain",
+            isNav ? "h-8 w-8" : "h-9 w-9",
+          )}
         />
       ) : (
         <span
           className={cn(
-            "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] border",
+            "inline-flex shrink-0 items-center justify-center rounded-[var(--radius-md)] border",
+            isNav ? "h-8 w-8" : "h-9 w-9",
             tone === "light"
               ? "border-white/25 bg-white/10 text-white"
               : "border-[var(--color-border-strong)] bg-[var(--color-accent-soft)] text-[var(--color-navy)]",
           )}
           aria-hidden="true"
         >
-          <span className="font-display text-xs font-bold tracking-[0.06em]">
+          <span className="font-display text-[0.65rem] font-bold tracking-[0.06em] sm:text-xs">
             AS
           </span>
         </span>
       )}
 
-      <span className="inline-flex min-w-0 flex-col">
+      <span
+        className={cn(
+          "inline-flex min-w-0",
+          isNav ? "flex-row items-center" : "flex-col",
+        )}
+      >
         <span
           className={cn(
-            "font-display text-[0.92rem] font-bold tracking-[0.1em] sm:text-[1.02rem] sm:tracking-[0.12em]",
+            "font-display font-bold",
+            isNav
+              ? "text-[0.82rem] tracking-[0.06em] sm:text-[0.95rem] sm:tracking-[0.08em]"
+              : "text-[0.92rem] tracking-[0.1em] sm:text-[1.02rem] sm:tracking-[0.12em]",
             tone === "light" ? "text-white" : "text-[var(--color-navy)]",
           )}
         >
           ABEL&nbsp;SOLUTIONS
         </span>
-        <span
-          className="mt-1.5 hidden h-0.5 w-10 rounded-[var(--radius-sm)] bg-[var(--color-accent)] sm:block"
-          aria-hidden="true"
-        />
-        <span
-          className={cn(
-            "mt-1.5 hidden text-xs font-medium tracking-[var(--tracking-eyebrow)] uppercase sm:block",
-            tone === "light" ? "text-white/65" : "text-[var(--color-muted)]",
-          )}
-        >
-          Technology · Construction
-        </span>
+        {!isNav ? (
+          <>
+            <span
+              className="mt-1.5 h-0.5 w-10 rounded-[var(--radius-sm)] bg-[var(--color-accent)]"
+              aria-hidden="true"
+            />
+            <span
+              className={cn(
+                "mt-1.5 text-xs font-medium tracking-[var(--tracking-eyebrow)] uppercase",
+                tone === "light" ? "text-white/65" : "text-[var(--color-muted)]",
+              )}
+            >
+              Technology · Construction
+            </span>
+          </>
+        ) : null}
       </span>
     </Link>
   );
