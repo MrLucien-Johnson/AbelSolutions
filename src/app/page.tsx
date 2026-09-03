@@ -1,9 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import {
-  DivisionCard,
   FeatureCard,
-  ProcessSteps,
-  QuoteCta,
   ServiceCard,
   EmptyState,
 } from "@/components/ui/Cards";
@@ -15,223 +12,254 @@ import {
   whyChoose,
 } from "@/content/services";
 import { getFeaturedProjects } from "@/content/projects";
-import { ProjectCard } from "@/components/projects/ProjectCard";
 import Link from "next/link";
+import {
+  AmbientStage,
+  DualOrbit,
+  IntentLaunch,
+  MagneticAction,
+  ProcessRail,
+  Reveal,
+  SpotlightGallery,
+} from "@/widgets";
 
 export default function HomePage() {
   const projects = getFeaturedProjects(3);
 
+  const spotlightItems = projects.map((project) => ({
+    id: project.slug,
+    title: project.title,
+    categoryLabel:
+      project.category === "technology" ? "Technology" : "Construction",
+    summary: project.summary,
+    whyItMatters: project.outcome || undefined,
+    location: project.location,
+    imageSrc: project.images[0]?.src ?? "/images/placeholders/project-technology.svg",
+    imageAlt: project.images[0]?.alt ?? project.title,
+    externalUrl: project.externalUrl,
+    externalLabel: project.ctaLabel ?? "View the live project",
+    secondaryHref: "/quote/",
+    secondaryLabel: "Discuss a similar brief",
+    badge: project.status === "live" ? "Live example" : "Coming soon",
+  }));
+
   return (
     <>
-      <section className="hero-atmosphere relative overflow-hidden text-white">
-        <div className="absolute inset-0 opacity-30" aria-hidden="true">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[48px_48px]" />
-        </div>
-        <div className="container-site relative grid gap-12 py-[var(--hero-y)] lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-16">
-          <div>
-            <p className="fade-up type-eyebrow mb-5 font-display text-white/70">
-              Abel Solutions
-            </p>
-            <h1 className="fade-up mb-6 max-w-3xl text-white">
-              Technology and construction solutions you can depend on.
-            </h1>
-            <p className="fade-up-delay mb-10 max-w-2xl text-lg md:text-xl leading-body text-white/80">
-              Abel Solutions helps homes and businesses with technology support,
-              repairs, installations, custom computer systems and practical
-              construction services across London and surrounding areas.
-            </p>
-            <div className="fade-up-delay-2 flex flex-wrap gap-3">
-              <Button href="/quote" variant="on-dark" size="lg">
+      <AmbientStage className="min-h-[min(92vh,920px)]" label="Abel Solutions home">
+        <div className="container-site relative flex min-h-[min(92vh,920px)] flex-col justify-end pb-[clamp(3.5rem,8vw,6rem)] pt-[clamp(7rem,14vw,11rem)]">
+          <p className="fade-up font-display text-[clamp(2.6rem,7vw,5.4rem)] font-bold leading-[0.92] tracking-[0.08em] text-white">
+            ABEL&nbsp;SOLUTIONS
+          </p>
+          <div className="mt-3 h-1 w-16 rounded-[var(--radius-sm)] bg-[var(--color-accent)] fade-up" aria-hidden="true" />
+          <p className="fade-up mt-4 type-eyebrow text-white/65">
+            Technology · Construction
+          </p>
+          <h1 className="fade-up mt-8 max-w-3xl text-white">
+            Technology and construction solutions you can depend on.
+          </h1>
+          <p className="fade-up-delay mt-6 mb-10 max-w-2xl text-lg md:text-xl leading-body text-white/80">
+            Practical help for homes and businesses across London and surrounding
+            areas — repairs, custom systems, installations and construction support
+            under one clear point of contact.
+          </p>
+          <div className="fade-up-delay-2 flex flex-wrap gap-3">
+            <MagneticAction>
+              <Button href="/quote/" variant="on-dark" size="lg">
                 Request a Quote
               </Button>
+            </MagneticAction>
+            <MagneticAction>
               <Button href="#services" variant="on-dark-secondary" size="lg">
                 Explore Our Services
               </Button>
-            </div>
-          </div>
-
-          <div
-            className="fade-up-delay relative min-h-[280px] overflow-hidden rounded-[var(--radius-lg)] border border-white/15 bg-white/5 p-6 md:min-h-[360px] md:p-8"
-            aria-hidden="true"
-          >
-            <HeroVisual />
+            </MagneticAction>
           </div>
         </div>
-      </section>
+      </AmbientStage>
 
       <Section id="services" ariaLabelledby="services-heading" tone="white">
-        <SectionHeading
-          id="services-heading"
-          eyebrow="What we do"
-          title="Two service divisions. One trusted company."
-          description="Whether you need help with a computer, a custom PC, a media wall or practical construction support, Abel Solutions keeps both areas under one clear point of contact."
-        />
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
-          <DivisionCard
-            title="Technology Services"
-            description="Support for repairs, upgrades, custom PCs, IT assistance, software, networks and business technology — explained clearly and scoped to what you actually need."
-            href="/technology-services"
-            accent="technology"
-            points={[
-              "Computer and laptop repairs",
-              "Custom and gaming PC builds",
-              "Network and Wi-Fi support",
-              "Small-business technical support",
+        <Reveal>
+          <SectionHeading
+            id="services-heading"
+            eyebrow="What we do"
+            title="Two service divisions. One trusted company."
+            description="Select a division to explore what we handle — then open the full service page when you are ready."
+          />
+        </Reveal>
+        <Reveal delayMs={80}>
+          <DualOrbit
+            defaultActiveId="technology"
+            items={[
+              {
+                id: "technology",
+                tone: "technology",
+                title: "Technology Services",
+                description:
+                  "Support for repairs, upgrades, custom PCs, IT assistance, software, networks and business technology — explained clearly and scoped to what you actually need.",
+                href: "/technology-services/",
+                points: [
+                  "Computer and laptop repairs",
+                  "Custom and gaming PC builds",
+                  "Network and Wi-Fi support",
+                  "Small-business technical support",
+                ],
+              },
+              {
+                id: "construction",
+                tone: "construction",
+                title: "Construction Services",
+                description:
+                  "Practical construction and property improvement support, including media walls, TV mounting, shelving, stud walls, groundwork and dependable labour.",
+                href: "/construction-services/",
+                points: [
+                  "Media walls and TV mounting",
+                  "Shelving and interior fitting",
+                  "Stud walls and room improvements",
+                  "Groundwork and labour support",
+                ],
+              },
             ]}
           />
-          <DivisionCard
-            title="Construction Services"
-            description="Practical construction and property improvement support, including media walls, TV mounting, shelving, stud walls, groundwork and dependable labour."
-            href="/construction-services"
-            accent="construction"
-            points={[
-              "Media walls and TV mounting",
-              "Shelving and interior fitting",
-              "Stud walls and room improvements",
-              "Groundwork and labour support",
-            ]}
-          />
-        </div>
+        </Reveal>
       </Section>
 
       <Section ariaLabelledby="why-heading" tone="soft">
-        <SectionHeading
-          id="why-heading"
-          eyebrow="Why choose Abel Solutions"
-          title="Practical help without the hard sell."
-          description="We focus on clear communication, careful work and honest quotations — for homeowners, landlords and local businesses alike."
-        />
+        <Reveal>
+          <SectionHeading
+            id="why-heading"
+            eyebrow="Why choose Abel Solutions"
+            title="Practical help without the hard sell."
+            description="We focus on clear communication, careful work and honest quotations — for homeowners, landlords and local businesses alike."
+          />
+        </Reveal>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {whyChoose.map((item) => (
-            <FeatureCard
-              key={item.title}
-              title={item.title}
-              description={item.description}
-            />
+          {whyChoose.map((item, index) => (
+            <Reveal key={item.title} delayMs={index * 60}>
+              <FeatureCard title={item.title} description={item.description} />
+            </Reveal>
           ))}
         </div>
       </Section>
 
       <Section ariaLabelledby="featured-heading" tone="white">
-        <SectionHeading
-          id="featured-heading"
-          eyebrow="Featured services"
-          title="A focused selection of what we help with most."
-          description="Explore the full lists on each service page. These are common starting points for homes and businesses."
-        />
+        <Reveal>
+          <SectionHeading
+            id="featured-heading"
+            eyebrow="Featured services"
+            title="A focused selection of what we help with most."
+            description="Explore the full lists on each service page. These are common starting points for homes and businesses."
+          />
+        </Reveal>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {featuredServices.map((service) => (
-            <ServiceCard key={service.title} {...service} />
+          {featuredServices.map((service, index) => (
+            <Reveal key={service.title} delayMs={index * 50}>
+              <ServiceCard {...service} />
+            </Reveal>
           ))}
         </div>
       </Section>
 
       <Section ariaLabelledby="process-heading" tone="warm">
-        <SectionHeading
-          id="process-heading"
-          eyebrow="How it works"
-          title="A straightforward process from enquiry to completion."
-          description="Some quotations may require photographs, specifications or an on-site assessment before we can price the work accurately."
-        />
-        <ProcessSteps steps={processSteps} />
+        <Reveal>
+          <SectionHeading
+            id="process-heading"
+            eyebrow="How it works"
+            title="A straightforward process from enquiry to completion."
+            description="Step through the sequence — some quotations may need photographs, specifications or an on-site assessment first."
+          />
+        </Reveal>
+        <Reveal delayMs={80}>
+          <ProcessRail steps={processSteps} />
+        </Reveal>
       </Section>
 
       <Section ariaLabelledby="projects-heading" tone="white">
-        <SectionHeading
-          id="projects-heading"
-          eyebrow="Projects"
-          title="Public work you can open today."
-          description="Live technology examples from Abel Solutions — including language learning and programming education sites — with construction photography joining as approved images become available."
-        />
-        {projects.length > 0 ? (
-          <div className="space-y-6">
-            <ProjectCard project={projects[0]} featured />
-            {projects.length > 1 ? (
-              <div className="grid gap-6 md:grid-cols-2">
-                {projects.slice(1).map((project) => (
-                  <ProjectCard key={project.slug} project={project} />
-                ))}
-              </div>
-            ) : null}
-          </div>
-        ) : (
-          <EmptyState
-            title="Project gallery coming soon"
-            description="Once genuine Abel Solutions project images are ready, they will be published here with clear summaries. In the meantime, request a quote to discuss your own requirements."
+        <Reveal>
+          <SectionHeading
+            id="projects-heading"
+            eyebrow="Projects"
+            title="Public work you can open today."
+            description="Live technology examples from Abel Solutions — with construction photography joining as approved images become available."
           />
-        )}
+        </Reveal>
+        <Reveal delayMs={80}>
+          {spotlightItems.length > 0 ? (
+            <SpotlightGallery items={spotlightItems} />
+          ) : (
+            <EmptyState
+              title="Project gallery coming soon"
+              description="Once genuine Abel Solutions project images are ready, they will be published here with clear summaries. In the meantime, request a quote to discuss your own requirements."
+            />
+          )}
+        </Reveal>
         <div className="mt-8">
-          <Button href="/projects" variant="secondary">
-            View all projects
-          </Button>
+          <MagneticAction>
+            <Button href="/projects/" variant="secondary">
+              View all projects
+            </Button>
+          </MagneticAction>
         </div>
       </Section>
 
       <Section ariaLabelledby="area-heading" tone="soft">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <div>
-            <SectionHeading
-              id="area-heading"
-              eyebrow="Service area"
-              title={`Based around ${siteConfig.address.serviceArea}.`}
-              description={`${siteConfig.address.serviceAreaNote} Tell us your location when you enquire and we will confirm suitability for the job.`}
-            />
+        <Reveal>
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+            <div>
+              <SectionHeading
+                id="area-heading"
+                eyebrow="Service area"
+                title={`Based around ${siteConfig.address.serviceArea}.`}
+                description={`${siteConfig.address.serviceAreaNote} Tell us your location when you enquire and we will confirm suitability for the job.`}
+              />
+            </div>
+            <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-7 md:p-8">
+              <h3 className="mb-3">Who we help</h3>
+              <ul className="space-y-2.5 text-[var(--color-slate)]">
+                <li>Homeowners and tenants</li>
+                <li>Landlords and property managers</li>
+                <li>Local businesses and SMEs</li>
+                <li>Construction companies needing labour support</li>
+              </ul>
+              <p className="mt-6 text-sm text-[var(--color-muted)]">
+                Prefer to browse first?{" "}
+                <Link
+                  href="/about/"
+                  className="font-semibold text-[var(--color-accent)] underline-offset-2 hover:underline"
+                >
+                  Learn more about Abel Solutions
+                </Link>
+                .
+              </p>
+            </div>
           </div>
-          <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-7 md:p-8">
-            <h3 className="mb-3">Who we help</h3>
-            <ul className="space-y-2.5 text-[var(--color-slate)]">
-              <li>Homeowners and tenants</li>
-              <li>Landlords and property managers</li>
-              <li>Local businesses and SMEs</li>
-              <li>Construction companies needing labour support</li>
-            </ul>
-            <p className="mt-6 text-sm text-[var(--color-muted)]">
-              Prefer to browse first?{" "}
-              <Link href="/about" className="font-semibold text-[var(--color-accent)] underline-offset-2 hover:underline">
-                Learn more about Abel Solutions
-              </Link>
-              .
-            </p>
-          </div>
-        </div>
+        </Reveal>
       </Section>
 
       <Section tone="white" className="!pt-0">
-        <QuoteCta />
+        <Reveal>
+          <IntentLaunch
+            title="Ready to discuss your project?"
+            description="Choose what you need help with, then request a quote. Some quotations may require photographs, specifications or an on-site assessment."
+            chips={[
+              {
+                id: "tech",
+                label: "Technology",
+                serviceParam: "technology",
+              },
+              {
+                id: "construction",
+                label: "Construction",
+                serviceParam: "construction",
+              },
+              {
+                id: "both",
+                label: "Both / not sure",
+                serviceParam: "general",
+              },
+            ]}
+          />
+        </Reveal>
       </Section>
     </>
-  );
-}
-
-function HeroVisual() {
-  return (
-    <div className="relative h-full min-h-[240px]">
-      <div className="absolute inset-x-4 top-4 rounded-[var(--radius-lg)] border border-white/20 bg-[var(--color-navy-soft)] p-4 shadow-[var(--shadow-soft)] md:inset-x-6 md:top-6">
-        <div className="mb-3 flex items-center gap-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-accent)]" />
-          <span className="type-label text-white/60">Technology</span>
-        </div>
-        <div className="space-y-2">
-          <div className="h-2.5 w-4/5 rounded-[var(--radius-sm)] bg-white/15" />
-          <div className="h-2.5 w-3/5 rounded-[var(--radius-sm)] bg-white/10" />
-          <div className="mt-4 grid grid-cols-3 gap-2">
-            <div className="h-14 rounded-[var(--radius-md)] bg-white/8 border border-white/10" />
-            <div className="h-14 rounded-[var(--radius-md)] bg-white/8 border border-white/10" />
-            <div className="h-14 rounded-[var(--radius-md)] bg-white/8 border border-white/10" />
-          </div>
-        </div>
-      </div>
-      <div className="absolute inset-x-8 bottom-4 rounded-[var(--radius-lg)] border border-white/15 bg-[rgb(26_42_34_/_0.9)] p-4 backdrop-blur-sm md:inset-x-10 md:bottom-6">
-        <div className="mb-3 flex items-center gap-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-construction)]" />
-          <span className="type-label text-white/60">Construction</span>
-        </div>
-        <div className="flex items-end gap-2">
-          <div className="h-16 flex-1 rounded-t-[var(--radius-md)] bg-white/12 border border-white/10" />
-          <div className="h-24 w-20 rounded-[var(--radius-md)] bg-white/10 border border-white/15" />
-          <div className="h-12 flex-1 rounded-t-[var(--radius-md)] bg-white/12 border border-white/10" />
-        </div>
-      </div>
-    </div>
   );
 }

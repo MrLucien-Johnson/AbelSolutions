@@ -72,9 +72,23 @@ Reusable pieces live under `src/components/`:
 - Projects: ProjectCard
 - SEO: JSON-LD helpers
 
+## Interactive widgets
+
+Reusable client widgets live under `src/widgets/` (see `src/widgets/README.md`):
+
+- `AmbientStage` — full-bleed pointer-reactive hero atmosphere
+- `MagneticAction` — soft magnetic CTAs
+- `Reveal` — scroll presence
+- `DualOrbit` — dual-division explorer
+- `ProcessRail` — process scrubber
+- `SpotlightGallery` — tabbed project stage
+- `IntentLaunch` — intent chips into `/quote`
+
+Styles: `src/widgets/styles/widgets.css` (imported from the root layout).
+
 ## Motion
 
-Light fade-up on the homepage hero only, disabled under `prefers-reduced-motion`.
+Hero fade-up plus widget motion (pointer fields, reveals, magnetic CTAs). All respect `prefers-reduced-motion`.
 
 ## Logo
 
