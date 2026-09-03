@@ -42,10 +42,13 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-border)]/80 bg-[var(--color-surface)]/95 backdrop-blur-md">
-      <div className="container-site flex h-[4.5rem] items-center justify-between gap-3 md:h-[5rem] md:gap-4">
-        <BrandMark className="min-w-0" />
+      <div className="container-site grid h-14 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 lg:h-[5rem] lg:grid-cols-[minmax(0,auto)_1fr_auto] lg:gap-6">
+        <BrandMark density="nav" className="justify-self-start" />
 
-        <nav aria-label="Primary" className="hidden lg:block">
+        <nav
+          aria-label="Primary"
+          className="hidden justify-self-center lg:block"
+        >
           <ul className="flex items-center gap-1">
             {navLinks.map((link) => {
               const active =
@@ -70,7 +73,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        <div className="flex items-center justify-self-end gap-2">
           <Button href="/quote/" className="hidden lg:inline-flex" size="md">
             Request a Quote
           </Button>
@@ -78,7 +81,7 @@ export function Header() {
           <button
             ref={menuButtonRef}
             type="button"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] text-[var(--color-navy)] lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] text-[var(--color-navy)] lg:hidden"
             aria-expanded={open}
             aria-controls={panelId}
             aria-label={open ? "Close menu" : "Open menu"}
